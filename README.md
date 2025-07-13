@@ -29,7 +29,9 @@ Manage books, members, analytics, and more — all from a beautiful, responsive 
 - 📊 Borrowing analytics dashboard
 - 🌗 Theme switching (light/dark)
 - 📱 Fully responsive design
-- 🔐 Role-based access (admin/user)
+- 🔐 Role-based access (admin/librarian/user)
+- 💾 Database backup
+- 💵 Fine algorithms
 - 📨 Email notifications
 - ⏳ Rate limiting, access control
 - 📤 Image uploads stored in DB

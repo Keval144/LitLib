@@ -65,7 +65,7 @@ const Logo = ({ theme }: { theme: string | undefined }) => {
 };
 
 const DesktopNavLinks = () => (
-  <NavbarContent className="hidden sm:flex gap-4" justify="start">
+  <NavbarContent className="hidden sm:flex space-x-5 px-20" >
     {NAV_LINKS.map((link) => (
       <NavbarItem key={link.name} isActive={link.active}>
         <Link href={link.href}>{link.name}</Link>
