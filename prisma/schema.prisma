@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model books {
+  book_id        Int          @id @default(autoincrement())
+  title          String       @db.VarChar(50)
+  author         String       @db.VarChar(50)
+  publisher      String       @db.VarChar(50)
+  isbn           Int
+  category       String       @db.VarChar(50)
+  language       String       @db.VarChar(30)
+  year_published Int
+  copies         Int
+  shelf_location String       @db.VarChar(30)
+  status         books_status
+}
+
+enum books_status {
+  Available
+  Checked_Out @map("Checked Out")
+  Reserved
+}
