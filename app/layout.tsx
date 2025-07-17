@@ -1,14 +1,10 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import clsx from "clsx";
-
 import { Providers } from "./providers";
 
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
-import { HomeNavbar } from "@/components/navbar";
-import Footer from "@/components/footer";
-import ScrollToTop from "@/components/scrolltotop";
 
 export const metadata: Metadata = {
   title: {
@@ -20,7 +16,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
-      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/icon0.svg", type: "image/svg+xml" },
     ],
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
     shortcut: "/favicon.ico",
@@ -52,11 +48,8 @@ export default function RootLayout({
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <div className="relative ">
-            <HomeNavbar />
             <main className="mx-auto">{children}</main>
           </div>
-          <Footer />
-          <ScrollToTop />
         </Providers>
       </body>
     </html>

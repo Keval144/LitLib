@@ -68,3 +68,9 @@ export const siteConfig = {
     sponsor: "https://patreon.com/",
   },
 };
+
+export const AuthConfig = {
+  name: "LitLib - Authentication",
+  description:
+    "Authentication form of LitLib ",
+};

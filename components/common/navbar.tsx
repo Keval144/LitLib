@@ -18,15 +18,15 @@ import {
   Avatar,
 } from "@heroui/react";
 
-import { ThemeSwitch } from "@/components/theme-switch";
-import { useTheme } from "next-themes";
+import { ThemeSwitch } from "@/components/common/theme-switch";
+
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
+import Themebasedlogo from "@/components/common/themebasedlogo";
 
-import BlackFullLogo from "../public/assets/logos/black/blackfulllogo.png";
-import WhiteFullLogo from "../public/assets/logos/white/whitefulllogo.png";
+import BlackLogo from "@/public/assets/logos/black/blackfulllogo.png";
+import WhiteLogo from "@/public/assets/logos/white/whitefulllogo.png";
 import { FaArrowUp } from "react-icons/fa";
 
 const NAV_LINKS = [
@@ -48,24 +48,8 @@ const MENU_ITEMS = [
   "Log Out",
 ];
 
-const Logo = ({ theme }: { theme: string | undefined }) => {
-  const imageSrc = theme === "dark" ? BlackFullLogo : WhiteFullLogo;
-  return (
-    <Link href="/">
-      <Image
-        src={imageSrc}
-        alt="LitLab Logo"
-        height={45}
-        className="left-0"
-        quality={100}
-        priority
-      />
-    </Link>
-  );
-};
-
 const DesktopNavLinks = () => (
-  <NavbarContent className="hidden sm:flex space-x-5 px-20" >
+  <NavbarContent className="hidden sm:flex space-x-5 px-20">
     {NAV_LINKS.map((link) => (
       <NavbarItem key={link.name} isActive={link.active}>
         <Link href={link.href}>{link.name}</Link>
@@ -131,7 +115,9 @@ const MobileMenuItems = () => (
               "w-full ps-10 text-base",
               index === 2 && "text-primary",
               index === MENU_ITEMS.length - 1 && "text-red-600 font-semibold",
-              index !== 2 && index !== MENU_ITEMS.length - 1 && "text-foreground"
+              index !== 2 &&
+                index !== MENU_ITEMS.length - 1 &&
+                "text-foreground"
             )}
           >
             {item}
@@ -144,12 +130,6 @@ const MobileMenuItems = () => (
 
 export const HomeNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -183,7 +163,13 @@ export const HomeNavbar = () => {
       position="sticky"
     >
       <NavbarContent justify="start">
-        <NavbarBrand>{mounted && <Logo theme={theme} />}</NavbarBrand>
+        <NavbarBrand>
+          <Themebasedlogo
+            lightLogo={WhiteLogo}
+            darkLogo={BlackLogo}
+            alt="Lit Lab Full Logo"
+          />
+        </NavbarBrand>
       </NavbarContent>
 
       <DesktopNavLinks />
