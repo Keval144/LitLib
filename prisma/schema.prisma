@@ -1,29 +1,219 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../app/generated/prisma"
+  output   = "../generated/prisma"
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
-model books {
-  book_id        Int          @id @default(autoincrement())
-  title          String       @db.VarChar(50)
-  author         String       @db.VarChar(50)
-  publisher      String       @db.VarChar(50)
-  isbn           Int
-  category       String       @db.VarChar(50)
-  language       String       @db.VarChar(30)
-  year_published Int
-  copies         Int
-  shelf_location String       @db.VarChar(30)
-  status         books_status
+enum UserRole { 
+  ADMINISTRATOR
+  LIBRARIAN 
+  PATRON
+  }
+
+enum ItemStatus {
+  AVAILABLE
+  CHECKED_OUT
+  RESERVED
+  LOST 
+  DAMAGED 
+  }
+
+enum ItemType { 
+  BOOK 
+  JOURNAL
+  MULTIMEDIA
+  OTHER
+  }
+enum NotificationType {
+  OVERDUE
+  RESERVATION_AVAILABLE 
+  SYSTEM_UPDATE
+  }
+enum ReservationStatus {
+  PENDING
+  FULFILLED
+  CANCELLED
+  }
+
+
+enum FineStatus {
+   UNPAID 
+   PAID 
+   WAIVED
+    }
+enum EntityType { 
+  USER 
+  ITEM
+  BORROWING 
+  RESERVATION 
+  FINE 
+  }
+enum ActionType { 
+  CREATE 
+  UPDATE
+  DELETE
+  }
+
+model User {
+  id            Int       @id @default(autoincrement())
+  firstName     String    @db.VarChar(50)
+  lastName      String    @db.VarChar(50)
+  email         String    @unique @db.VarChar(100)
+  password      String    @db.VarChar(100)
+  role          UserRole
+  libraryCardId String?   @unique @db.VarChar(20)
+  isDeleted     Boolean   @default(false)
+  createdAt     DateTime  @default(now()) @db.Timestamptz
+  updatedAt     DateTime    @default(now()) @db.Timestamptz
+  deletedAt     DateTime? @db.Timestamptz
+
+  // Relationships
+  borrowedItems Borrowing[]
+  reservations  Reservation[]
+  fines         Fine[]
+  notifications Notification[]
+  blogs         Blog[]
+  announcements Announcement[]
 }
 
-enum books_status {
-  Available
-  Checked_Out @map("Checked Out")
-  Reserved
+
+model LibraryItem {
+  id            Int         @id @default(autoincrement())
+  title         String      @db.VarChar(100)
+  author        String      @db.VarChar(50)
+  publisher     String      @db.VarChar(50)
+  isbn          String?     @db.VarChar(17)
+  itemType      ItemType
+  categories    String[]    @db.VarChar(30)
+  languages     String[]    @db.VarChar(30)
+  yearPublished Int?
+  edition       String?     @db.VarChar(20)
+  shelfLocation String?     @db.VarChar(30)
+  status        ItemStatus  @default(AVAILABLE)
+  coverImage    String?     @db.VarChar(200)
+  description   String?     @db.Text
+  isReference   Boolean     @default(false)
+  isDeleted     Boolean     @default(false)
+  createdAt     DateTime    @default(now()) @db.Timestamptz
+  updatedAt     DateTime    @default(now()) @db.Timestamptz
+  deletedAt     DateTime?   @db.Timestamptz
+
+  // Relationships
+  borrowings    Borrowing[]
+  reservations  Reservation[]
+
+  @@index([isbn, itemType, status])
+}
+
+model Borrowing {
+  id           Int       @id @default(autoincrement())
+  borrowDate   DateTime  @default(now()) @db.Timestamptz
+  dueDate      DateTime  @db.Timestamptz
+  returnDate   DateTime? @db.Timestamptz
+  renewed      Boolean   @default(false)
+  maxRenewals  Int       @default(1)
+  renewalCount Int       @default(0)
+  createdAt    DateTime  @default(now()) @db.Timestamptz
+  updatedAt     DateTime    @default(now()) @db.Timestamptz
+
+  // Relationships
+  
+  item         LibraryItem @relation(fields: [itemId], references: [id])
+  itemId       Int
+  user         User        @relation(fields: [userId], references: [id])
+  userId       Int
+  fine         Fine?
+}
+
+model BorrowingRule {
+  id          Int     @id @default(autoincrement())
+  itemType    ItemType
+  maxLoanDays Int
+  maxRenewals Int     @default(1)
+  finePerDay  Float
+  createdAt   DateTime @default(now()) @db.Timestamptz
+  updatedAt     DateTime    @default(now()) @db.Timestamptz
+}
+
+model Reservation {
+  id              Int               @id @default(autoincrement())
+  reservationDate DateTime          @default(now()) @db.Timestamptz
+  expiryDate      DateTime          @db.Timestamptz
+  status          ReservationStatus @default(PENDING)
+  createdAt       DateTime          @default(now()) @db.Timestamptz
+  updatedAt     DateTime    @default(now()) @db.Timestamptz
+
+  // Relationships
+  item            LibraryItem       @relation(fields: [itemId], references: [id])
+  itemId          Int
+  user            User              @relation(fields: [userId], references: [id])
+  userId          Int
+}
+
+model Fine {
+  id          Int         @id @default(autoincrement())
+  amount      Float
+  reason      String      @db.VarChar(50)
+  issueDate   DateTime    @default(now()) @db.Timestamptz
+  paidDate    DateTime?   @db.Timestamptz
+  status      FineStatus  @default(UNPAID)
+  createdAt   DateTime    @default(now()) @db.Timestamptz
+  updatedAt     DateTime    @default(now()) @db.Timestamptz
+
+  // Relationships
+  user        User        @relation(fields: [userId], references: [id])
+  userId      Int
+  borrowing   Borrowing   @relation(fields: [borrowingId], references: [id])
+  borrowingId Int         @unique
+}
+
+model Notification {
+  id        Int               @id @default(autoincrement())
+  type      NotificationType
+  message   String            @db.VarChar(200)
+  sentAt    DateTime          @default(now()) @db.Timestamptz
+  read      Boolean           @default(false)
+  readAt    DateTime?         @db.Timestamptz
+  createdAt DateTime          @default(now()) @db.Timestamptz
+  updatedAt     DateTime    @default(now()) @db.Timestamptz
+
+  // Relationship
+  user      User              @relation(fields: [userId], references: [id])
+  userId    Int
+}
+
+model Blog {
+  id            Int       @id @default(autoincrement())
+  title         String    @db.VarChar(100)
+  content       String    @db.Text
+  readingTime   Int
+  categories    String[]  @db.VarChar(30)
+  featuredImage String?   @db.VarChar(200)
+  isDeleted     Boolean   @default(false)
+  createdAt     DateTime  @default(now()) @db.Timestamptz
+  updatedAt     DateTime    @default(now()) @db.Timestamptz
+  deletedAt     DateTime? @db.Timestamptz
+
+  // Relationship
+  user      User              @relation(fields: [userId], references: [id])
+  userId    Int
+}
+
+model Announcement {
+  id          Int       @id @default(autoincrement())
+  title       String    @db.VarChar(100)
+  content     String    @db.Text
+  categories  String[]  @db.VarChar(30)
+  isDeleted   Boolean   @default(false)
+  createdAt   DateTime  @default(now()) @db.Timestamptz
+  updatedAt     DateTime    @default(now()) @db.Timestamptz
+  deletedAt   DateTime? @db.Timestamptz
+
+  // Relationship
+  user      User              @relation(fields: [userId], references: [id])
+  userId    Int
 }

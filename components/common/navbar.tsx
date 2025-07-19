@@ -24,10 +24,11 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import clsx from "clsx";
 import Themebasedlogo from "@/components/common/themebasedlogo";
+import ExpandButton from "@/components/button/signupbutton";
 
 import BlackLogo from "@/public/assets/logos/black/blackfulllogo.png";
 import WhiteLogo from "@/public/assets/logos/white/whitefulllogo.png";
-import { FaArrowUp } from "react-icons/fa";
+import { FaArrowUp } from "react-icons/fa6";
 
 const NAV_LINKS = [
   { name: "Features", href: "#features" },
@@ -63,11 +64,13 @@ const AuthLinks = ({ isLoginned }: { isLoginned: boolean }) => {
     return (
       <>
         <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
+          <Link href="/login">Login</Link>
         </NavbarItem>
         <NavbarItem className="hidden lg:flex items-center gap-1">
-          <Link href="#">Sign Up</Link>
-          <FaArrowUp className="text-sm rotate-45" />
+          <ExpandButton
+            label="Sign Up"
+            icon={<FaArrowUp size={15} className="rotate-45 text-white" />}
+          />
         </NavbarItem>
       </>
     );
@@ -153,7 +156,7 @@ export const HomeNavbar = () => {
     <HeroUINavbar
       className={clsx(
         "glass-navbar",
-        "z-50 fixed left-1/2 -translate-x-1/2 top-5 w-[90%] rounded-full",
+        "z-50 fixed left-1/2 -translate-x-1/2 top-5 w-[90%] rounded-full dark:border-2",
         "border border-[var(--navbar-border)] bg-[var(--navbar-bg)] backdrop-blur-2xl",
         "shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-all duration-300"
       )}
@@ -163,11 +166,12 @@ export const HomeNavbar = () => {
       position="sticky"
     >
       <NavbarContent justify="start">
-        <NavbarBrand>
+        <NavbarBrand className=" ">
           <Themebasedlogo
             lightLogo={WhiteLogo}
             darkLogo={BlackLogo}
             alt="Lit Lab Full Logo"
+            height={40}
           />
         </NavbarBrand>
       </NavbarContent>

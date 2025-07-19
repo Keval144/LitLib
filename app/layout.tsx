@@ -6,6 +6,7 @@ import { Providers } from "./providers";
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import ScrollToTop from "@/components/common/scrolltotop";
 
 export const metadata: Metadata = {
   title: {
@@ -49,10 +50,11 @@ export default function RootLayout({
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <div className="relative ">
-            <main className="mx-auto">{children}</main>
+            <div role="main" className="mx-auto">{children}</div>
           </div>
         </Providers>
         <SpeedInsights />
+        <ScrollToTop />
       </body>
     </html>
   );

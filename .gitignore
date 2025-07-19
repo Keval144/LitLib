@@ -38,6 +38,6 @@ next-env.d.ts
 .VSCodeCounter/
 .vscode/
 
-/app/generated/prisma
+
 
 

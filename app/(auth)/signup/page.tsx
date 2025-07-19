@@ -1,17 +1,11 @@
 import { Metadata } from "next";
 import SignUpForm from "@/components/auth/signupform";
-import { ThemeSwitch } from "@/components/common/theme-switch";
 
 export const metadata: Metadata = {
   title: "Sign Up",
+  description: "Sign up Page for Patreon to Join Library",
 };
 
-export default function SignUpPage() {
-  return (
-    <section className="">
-      <div className="flex justify-center min-h-screen">
-
-      </div>
-    </section>
-  );
+export default function SignUp() {
+  return <SignUpForm />;
 }

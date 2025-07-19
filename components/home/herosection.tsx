@@ -1,6 +1,5 @@
 // components/HeroSection.tsx
 
-import Link from "next/link";
 import clsx from "clsx";
 import HeroButton from "@/components/button/herobutton";
 
@@ -35,7 +34,7 @@ export default function HeroSection() {
             style={{ backgroundColor: "var(--color-accent)" }}
           />
           <HeroButton
-            href="#"
+            href="https://github.com/keval144/litlib"
             label="Get Documentation"
             variant="bordered"
             className="rounded-full px-6 py-3 text-base font-semibold border-[var(--color-border)] text-[var(--color-text)] border-2"
