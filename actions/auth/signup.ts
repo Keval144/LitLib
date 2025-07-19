@@ -2,7 +2,6 @@
 
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
-import { redirect } from "next/navigation";
 
 export async function signup(formData: FormData) {
   try {
@@ -26,13 +25,13 @@ export async function signup(formData: FormData) {
       data: {
         firstName: firstname,
         lastName: lastname,
-        email,
+        email: email,
         role: "PATRON",
         password: hashedPassword,
       },
     });
 
-    return redirect("/login");
+    return { success: true, redirectTo: "/login" };
   } catch (error) {
     console.error("Signup failed:", error);
     return { error: "Internal server error" };
