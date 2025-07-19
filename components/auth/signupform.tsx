@@ -8,6 +8,8 @@ import { Divider } from "@heroui/divider";
 import Link from "next/link";
 import { signup } from "@/actions/auth/signup";
 import { useRouter } from "next/navigation";
+import { BsInfo } from "react-icons/bs";
+import { Tooltip } from "@heroui/react";
 
 export default function SignUpForm() {
   const [isVisible, setIsVisible] = useState(false);
@@ -71,28 +73,55 @@ export default function SignUpForm() {
           name="email"
         />
 
-        <Input
-          label="Password"
-          type={isVisible ? "text" : "password"}
-          variant="bordered"
-          size="sm"
-          required
-          name="password"
-          className="w-full"
-          endContent={
+        <div className="flex items-end gap-2 w-full">
+          <Input
+            label="Password"
+            type={isVisible ? "text" : "password"}
+            variant="bordered"
+            size="sm"
+            required
+            name="password"
+            className="flex-1"
+            endContent={
+              <button
+                type="button"
+                onClick={toggleVisibility}
+                className="focus:outline-none"
+              >
+                {isVisible ? (
+                  <FaEyeSlash className="text-2xl text-default-400 pointer-events-none" />
+                ) : (
+                  <FaEye className="text-2xl text-default-400 pointer-events-none" />
+                )}
+              </button>
+            }
+          />
+
+          <Tooltip
+            content={
+              <div className="text-sm text-gray-500 dark:text-gray-100">
+                <p>
+                  <strong>Password requirements:</strong>
+                </p>
+                <ul className="list-disc list-inside">
+                  <li>At least 6 characters</li>
+                  <li>One uppercase letter</li>
+                  <li>One number</li>
+                  <li>One special character</li>
+                </ul>
+              </div>
+            }
+            placement="bottom"
+          >
             <button
               type="button"
-              onClick={toggleVisibility}
-              className="focus:outline-none"
+              className="flex items-center justify-center bg-gray-200 hover:bg-gray-300 text-default-400 rounded-full h-7 w-7 transition shrink-0   mb-2"
             >
-              {isVisible ? (
-                <FaEyeSlash className="text-2xl text-default-400 pointer-events-none" />
-              ) : (
-                <FaEye className="text-2xl text-default-400 pointer-events-none" />
-              )}
+              <BsInfo className="text-md" />
             </button>
-          }
-        />
+          </Tooltip>
+        </div>
+
         {error && <div className="text-red-500 text-sm">{error}</div>}
         <button
           type="submit"
@@ -106,7 +135,7 @@ export default function SignUpForm() {
       <br />
       <Divider className="h-[0.5] text-black" />
       <div className="flex align-center justify-center pt-3 text-sm">
-        Already have an Account ?{" "}
+        Already have an Account ?
         <Link
           href="/login"
           className="text-indigo-500 dark:text-indigo-300 pl-2"

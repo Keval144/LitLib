@@ -79,6 +79,7 @@ export default function LoginForm() {
         <button
           type="submit"
           className={`${buttonClass({ className: "w-full" })} text-white`}
+          disabled={isPending}
           style={{ backgroundColor: "var(--color-accent)" }}
         >
           {isPending ? "Logging In..." : "Log In"}

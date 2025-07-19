@@ -37,54 +37,48 @@ export default function AuthLayout({
         </div>
         {/* Column 2: Content + Theme Switch + Logo */}
         <div className="w-full md:w-1/3 p-6 relative flex flex-col">
-          <div className="flex flex-row-reverse mb-6 relative">
-            <div className="w-10 h-10 border-2 rounded-full flex items-center justify-center bg-[var(--navbar-bg)] backdrop-blur-md border-[var(--navbar-border)] shadow-lg">
-              <ThemeSwitch />
-            </div>
-          </div>
-          <div className="relative">
-            <div
-              className="block sm:hidden w-full h-48 absolute top-0 left-0 z-[-1] bg-cover bg-center bg-no-repeat mix-blend-soft-light mask-image-gradient"
-              style={{
-                backgroundImage: `url(${LibraryPhoto.src})`,
-              }}
-            ></div>
+          {/* Main Content */}
+          <div
+            className={clsx(
+              "w-full max-w-md mx-auto rounded-xl border-2 bg-[var(--navbar-bg)] backdrop-blur-md border-[var(--navbar-border)] opacity-80 shadow-lg p-6",
+              "sm:min-h-0 flex flex-col justify-center mb-8"
+            )}
+          >
+            <div className="relative flex justify-center items-center ">
+              <Link href={"/"}>
+                <Themebasedlogo
+                  lightLogo={WhiteLogo}
+                  darkLogo={BlackLogo}
+                  alt="Lit Lab Full Logo"
+                  height={45}
+                />
+              </Link>
 
-            {/* Main Content */}
-            <div
-              className={clsx(
-                "w-full max-w-md mx-auto rounded-xl border-2 bg-[var(--navbar-bg)] backdrop-blur-md border-[var(--navbar-border)] opacity-80 shadow-lg p-6",
-                " sm:min-h-0 flex flex-col justify-center mb-8  "
-              )}
-            >
-              <div className="flex justify-center items-center">
-                <Link href={"/"}>
-                  <Themebasedlogo
-                    lightLogo={WhiteLogo}
-                    darkLogo={BlackLogo}
-                    alt="Lit Lab Full Logo"
-                    height={45}
-                  />
-                </Link>
+              {/* Theme switch overlaps logo */}
+              <div className="absolute top-[-10px] right-[-10px] z-30 w-10 h-10 border-2 rounded-full flex items-center justify-center bg-[var(--navbar-bg)] backdrop-blur-md border-[var(--navbar-border)] shadow-lg">
+                <ThemeSwitch />
               </div>
-              <div className="flex flex-col items-center justify-center p-4 text-center space-y-2">
-                <div
-                  className={clsx(
-                    "text-[clamp(1.5rem,4vw,2rem)] font-extrabold",
-                    "bg-gradient-to-br from-[var(--color-text)] to-[var(--color-accent)]",
-                    "bg-clip-text text-transparent"
-                  )}
-                >
-                  Join our Library
-                </div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  Low-key the best place to level up
-                </div>
-              </div>
-              {children}
             </div>
-            <Authfooter />
+
+            <div className="flex flex-col items-center justify-center p-4 text-center space-y-2">
+              <div
+                className={clsx(
+                  "text-[clamp(1.5rem,4vw,2rem)] font-extrabold",
+                  "bg-gradient-to-br from-[var(--color-text)] to-[var(--color-accent)]",
+                  "bg-clip-text text-transparent"
+                )}
+              >
+                Join our Library
+              </div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">
+                Low-key the best place to level up
+              </div>
+            </div>
+
+            {children}
           </div>
+
+          <Authfooter />
         </div>
       </section>
     </>

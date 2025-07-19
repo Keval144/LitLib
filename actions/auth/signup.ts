@@ -2,17 +2,40 @@
 
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
+import { z } from "zod";
+
+const schema = z.object({
+  firstname: z.string().min(1, "First name is required"),
+  lastname: z.string().min(1, "Last name is required"),
+  email: z
+    .string()
+    .email("Invalid email format")
+    .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email"),
+  password: z
+    .string()
+    .min(6, "Password must be at least 6 characters")
+    .regex(
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{6,}$/,
+      "Password must contain a letter, a number, and a special character"
+    ),
+});
 
 export async function signup(formData: FormData) {
   try {
-    const firstname = formData.get("firstname") as string;
-    const lastname = formData.get("lastname") as string;
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
+    const data = {
+      firstname: formData.get("firstname") as string,
+      lastname: formData.get("lastname") as string,
+      email: formData.get("email") as string,
+      password: formData.get("password") as string,
+    };
 
-    if (!email || !password) {
-      return { error: "Missing email or password" };
+    const parsed = schema.safeParse(data);
+
+    if (!parsed.success) {
+      return { error: parsed.error.issues[0].message };
     }
+
+    const { firstname, lastname, email, password } = parsed.data;
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
@@ -25,7 +48,7 @@ export async function signup(formData: FormData) {
       data: {
         firstName: firstname,
         lastName: lastname,
-        email: email,
+        email,
         role: "PATRON",
         password: hashedPassword,
       },
