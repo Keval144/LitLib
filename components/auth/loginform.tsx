@@ -8,6 +8,7 @@ import { Divider } from "@heroui/divider";
 import Link from "next/link";
 import { login } from "@/actions/auth/login";
 import { useRouter } from "next/navigation";
+import { MdOutlineDangerous } from "react-icons/md";
 
 export default function LoginForm() {
   const [isVisible, setIsVisible] = useState(false);
@@ -74,7 +75,15 @@ export default function LoginForm() {
             </button>
           }
         />
-        {error && <div className="text-red-500 text-sm">{error}</div>}
+        {error && (
+          <div
+            className="text-red-500 text-sm bg-red-100  flex pt-3 pb-3 pl-2 rounded-lg  w-full  
+                "
+          >
+            <MdOutlineDangerous size={20} />
+            {error}
+          </div>
+        )}
 
         <button
           type="submit"

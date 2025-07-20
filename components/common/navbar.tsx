@@ -29,29 +29,39 @@ import ExpandButton from "@/components/button/signupbutton";
 import BlackLogo from "@/public/assets/logos/black/blackfulllogo.png";
 import WhiteLogo from "@/public/assets/logos/white/whitefulllogo.png";
 import { FaArrowUp } from "react-icons/fa6";
+import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
-  { name: "Features", href: "#features" },
-  { name: "Customers", href: "#customers", active: true },
-  { name: "Integrations", href: "#integrations" },
+  { name: "Search", href: "/search" },
+  { name: "Announcement", href: "/announcement" },
+  { name: "Events", href: "/events" },
 ];
 
-const MENU_ITEMS = [
-  "Profile",
-  "Dashboard",
-  "Help & Feedback",
-  "Log Out",
-];
+const DesktopNavLinks = () => {
+  const pathname = usePathname();
 
-const DesktopNavLinks = () => (
-  <NavbarContent className="hidden sm:flex space-x-5 px-20">
-    {NAV_LINKS.map((link) => (
-      <NavbarItem key={link.name} isActive={link.active}>
-        <Link href={link.href}>{link.name}</Link>
-      </NavbarItem>
-    ))}
-  </NavbarContent>
-);
+  return (
+    <NavbarContent className="hidden sm:flex space-x-5 px-20">
+      {NAV_LINKS.map((link) => {
+        const isActive = pathname === link.href;
+
+        return (
+          <NavbarItem key={link.name}>
+            <Link
+              href={link.href}
+              className={`
+                ${isActive ? "text-[hsl(var(--theme-accent))] font-semibold" : "black:text-white"}
+                hover:text-[hsl(var(--theme-accent-hover))]
+              `}
+            >
+              {link.name}
+            </Link>
+          </NavbarItem>
+        );
+      })}
+    </NavbarContent>
+  );
+};
 
 const AuthLinks = ({ isLoginned }: { isLoginned: boolean }) => {
   if (!isLoginned) {
@@ -101,6 +111,7 @@ const AuthLinks = ({ isLoginned }: { isLoginned: boolean }) => {
   );
 };
 
+const MENU_ITEMS = ["Profile", "Dashboard", "Help & Feedback", "Log Out"];
 const MobileMenuItems = () => (
   <NavbarMenu className="fixed inset-0 z-20 bg-[var(--color-bg)]/80 backdrop-blur-lg !w-screen !h-screen">
     {MENU_ITEMS.map((item, index) => (
@@ -161,12 +172,13 @@ export const HomeNavbar = () => {
     >
       <NavbarContent justify="start">
         <NavbarBrand className=" ">
+          <Link href={"/"}>
           <Themebasedlogo
             lightLogo={WhiteLogo}
             darkLogo={BlackLogo}
             alt="Lit Lab Full Logo"
             height={40}
-          />
+          /></Link>
         </NavbarBrand>
       </NavbarContent>
 

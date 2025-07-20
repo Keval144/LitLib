@@ -5,7 +5,7 @@ import Link from "next/link";
 interface ExpandButtonProps {
   href?: string;
   label?: string;
-  icon?: ReactNode;  // Icon as a prop
+  icon?: ReactNode;
 }
 
 export default function ExpandButton({

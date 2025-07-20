@@ -13,11 +13,17 @@ const schema = z.object({
     .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email"),
   password: z
     .string()
-    .min(6, "Password must be at least 6 characters")
-    .regex(
-      /^(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{6,}$/,
-      "Password must contain a letter, a number, and a special character"
-    ),
+    .min(6, { message: "Password must be at least 6 characters long" })
+    .max(12, { message: "Password is too long maximum characters are 12" })
+    .refine((val) => /[A-Z]/.test(val), {
+      message: "Password must contain at least one uppercase letter",
+    })
+    .refine((val) => /\d/.test(val), {
+      message: "Password must contain at least one number",
+    })
+    .refine((val) => /[@#$%^&+=!]/.test(val), {
+      message: "Password must contain at least one special character ",
+    }),
 });
 
 export async function signup(formData: FormData) {

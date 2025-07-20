@@ -10,6 +10,8 @@ import { signup } from "@/actions/auth/signup";
 import { useRouter } from "next/navigation";
 import { BsInfo } from "react-icons/bs";
 import { Tooltip } from "@heroui/react";
+import { Dangrek } from "next/font/google";
+import { MdOutlineDangerous } from "react-icons/md";
 
 export default function SignUpForm() {
   const [isVisible, setIsVisible] = useState(false);
@@ -122,7 +124,15 @@ export default function SignUpForm() {
           </Tooltip>
         </div>
 
-        {error && <div className="text-red-500 text-sm">{error}</div>}
+        {error && (
+          <div
+            className="text-red-500 text-sm bg-red-100  flex pt-3 pb-3 pl-2 rounded-lg  w-full  
+        "
+          >
+            <MdOutlineDangerous size={20} />
+            {error}
+          </div>
+        )}
         <button
           type="submit"
           disabled={isPending}
@@ -134,7 +144,7 @@ export default function SignUpForm() {
       </form>
       <br />
       <Divider className="h-[0.5] text-black" />
-      <div className="flex align-center justify-center pt-3 text-sm">
+      <div className="flex align-center justify-center pt-2 text-sm">
         Already have an Account ?
         <Link
           href="/login"
