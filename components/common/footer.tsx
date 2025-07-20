@@ -70,7 +70,7 @@ export function Footer() {
             />
           </div>
 
-          <h6 className="text-4xl font-logo tracking-tight text-gray-700 dark:text-white">
+          <h6 className="text-4xl font-logo tracking-tight text-[#373536] dark:text-white">
             <span className="font-extrabold">LIT</span>
             <span className="font-medium">LIB</span>
           </h6>

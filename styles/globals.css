@@ -4,9 +4,6 @@
 
 /* styles/globals.css */
 
-html {
-  scroll-behavior: smooth;
-}
 :root {
   --color-bg: #ffffff;
   --color-text: #111827;
@@ -40,3 +37,4 @@ html {
   --theme-accent: 240 89% 76%;
   --theme-accent-hover: 240 89% 66%;
 }
+

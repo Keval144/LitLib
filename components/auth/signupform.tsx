@@ -10,7 +10,6 @@ import { signup } from "@/actions/auth/signup";
 import { useRouter } from "next/navigation";
 import { BsInfo } from "react-icons/bs";
 import { Tooltip } from "@heroui/react";
-import { Dangrek } from "next/font/google";
 import { MdOutlineDangerous } from "react-icons/md";
 
 export default function SignUpForm() {
@@ -20,8 +19,6 @@ export default function SignUpForm() {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
-  const router = useRouter();
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -29,9 +26,7 @@ export default function SignUpForm() {
     startTransition(() => {
       signup(formData)
         .then((result) => {
-          if (result?.redirectTo) {
-            router.push(result.redirectTo);
-          } else if (result?.error) {
+          if (result?.error) {
             setError(result.error);
           }
         })

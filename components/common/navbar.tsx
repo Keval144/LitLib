@@ -67,7 +67,7 @@ const AuthLinks = ({ isLoginned }: { isLoginned: boolean }) => {
   if (!isLoginned) {
     return (
       <>
-        <NavbarItem className="hidden lg:flex">
+        <NavbarItem className="hidden lg:flex hover:text-[hsl(var(--theme-accent-hover))]">
           <Link href="/login">Login</Link>
         </NavbarItem>
         <NavbarItem className="hidden lg:flex items-center gap-1">

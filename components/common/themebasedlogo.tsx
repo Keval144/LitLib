@@ -4,17 +4,19 @@ import Image, { StaticImageData } from "next/image";
 import { useMountedTheme } from "@/hooks/useMountedTheme";
 
 type ThemeBasedLogoProps = {
-  lightLogo: StaticImageData;
-  darkLogo: StaticImageData;
+  lightLogo: string | StaticImageData;
+  darkLogo: string | StaticImageData;
   alt: string;
   height?: number;
+  width?: number;
 };
 
 export default function ThemeBasedLogo({
   lightLogo,
   darkLogo,
   alt,
-  height,
+  height = 50,
+  width = 0,
 }: ThemeBasedLogoProps) {
   const { theme, mounted } = useMountedTheme();
 
@@ -28,6 +30,7 @@ export default function ThemeBasedLogo({
       alt={alt}
       height={height}
       quality={100}
+      width={width}
       priority
     />
   );

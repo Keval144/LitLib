@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
+import { redirect } from "next/navigation";
 
 export async function login(formData: FormData) {
   try {
@@ -24,10 +25,10 @@ export async function login(formData: FormData) {
     if (!isPasswordValid) {
       return { error: "Invalid password" };
     }
-
-    return { success: true, redirectTo: "/dashboard" };
   } catch (err) {
     console.error("Login error:", err);
     return { error: "Internal server error" };
+  } finally {
+    redirect("/dashboard");
   }
 }

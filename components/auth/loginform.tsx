@@ -17,24 +17,16 @@ export default function LoginForm() {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
-  const router = useRouter();
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
-    startTransition(() => {
-      login(formData)
-        .then((result) => {
-          if (result?.redirectTo) {
-            router.push(result.redirectTo);
-          } else if (result?.error) {
-            setError(result.error);
-          }
-        })
-        .catch((err) => {
-          setError(err.message || "Something went wrong");
-        });
+    startTransition(async () => {
+      const result = await login(formData);
+
+      if (result?.error) {
+        setError(result.error);
+      }
     });
   };
 

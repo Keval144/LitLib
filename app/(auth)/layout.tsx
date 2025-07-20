@@ -2,6 +2,7 @@ import Carousel, { Slide } from "@/components/auth/imageslider";
 import { Metadata } from "next";
 import Link from "next/link";
 import clsx from "clsx";
+import { Toaster } from "react-hot-toast";
 import { ThemeSwitch } from "@/components/common/theme-switch";
 
 export const metadata: Metadata = {
@@ -81,6 +82,7 @@ export default function AuthLayout({
           <Authfooter />
         </div>
       </section>
+      <Toaster position="bottom-right" toastOptions={{ duration: 4000 }} />
     </>
   );
 }

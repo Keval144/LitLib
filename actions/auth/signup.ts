@@ -1,8 +1,11 @@
+//actions/auth/signup.ts
 "use server";
 
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
 import { z } from "zod";
+import { redirect } from "next/navigation";
+
 
 const schema = z.object({
   firstname: z.string().min(1, "First name is required"),
@@ -59,10 +62,10 @@ export async function signup(formData: FormData) {
         password: hashedPassword,
       },
     });
-
-    return { success: true, redirectTo: "/login" };
   } catch (error) {
     console.error("Signup failed:", error);
     return { error: "Internal server error" };
+  } finally {
+    redirect("/login");
   }
 }
