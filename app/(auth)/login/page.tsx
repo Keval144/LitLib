@@ -16,12 +16,6 @@ export default function LoginPage() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
-  const params = useSearchParams();
-
-  useEffect(() => {
-    const err = params.get("error");
-    if (err) setErrorMsg(err);
-  }, [params]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
