@@ -43,6 +43,7 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en" data-scroll-behavior="smooth">
       <head></head>
+
       <body
         className={clsx(
           "text-foreground bg-background font-sans antialiased",

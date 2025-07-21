@@ -18,6 +18,7 @@ import {
   Avatar,
 } from "@heroui/react";
 
+import { useSession } from "next-auth/react";
 import { ThemeSwitch } from "@/components/common/theme-switch";
 
 import React, { useEffect, useState } from "react";
@@ -30,6 +31,9 @@ import BlackLogo from "@/public/assets/logos/black/blackfulllogo.png";
 import WhiteLogo from "@/public/assets/logos/white/whitefulllogo.png";
 import { FaArrowUp } from "react-icons/fa6";
 import { usePathname } from "next/navigation";
+import { useLogout } from "@/lib/logout";
+import { IsUserLoggedIn } from "@/lib/isloggedin";
+import { SessionProvider } from "next-auth/react";
 
 const NAV_LINKS = [
   { name: "Search", href: "/search" },
@@ -39,7 +43,6 @@ const NAV_LINKS = [
 
 const DesktopNavLinks = () => {
   const pathname = usePathname();
-
   return (
     <NavbarContent className="hidden sm:flex space-x-5 px-20">
       {NAV_LINKS.map((link) => {
@@ -63,7 +66,10 @@ const DesktopNavLinks = () => {
   );
 };
 
-const AuthLinks = ({ isLoginned }: { isLoginned: boolean }) => {
+const AuthLinks = () => {
+  const isLoginned = IsUserLoggedIn();
+  const logout = useLogout();
+  const { data: session } = useSession();
   if (!isLoginned) {
     return (
       <>
@@ -97,13 +103,13 @@ const AuthLinks = ({ isLoginned }: { isLoginned: boolean }) => {
         <DropdownMenu aria-label="User Menu" variant="flat">
           <DropdownItem key="profile" className="h-14 gap-2">
             <p className="font-semibold">Signed in as</p>
-            <p className="font-semibold">zoey@example.com</p>
+            <p className="font-semibold">{session?.user?.name}</p>
+            <p className="font-extralight">{session?.user.email}</p>
           </DropdownItem>
           <DropdownItem key="settings">My Settings</DropdownItem>
-          <DropdownItem key="team_settings">Team Settings</DropdownItem>
-          <DropdownItem key="analytics">Analytics</DropdownItem>
+
           <DropdownItem key="logout" color="danger">
-            Log Out
+            <button onClick={logout}>Log Out</button>
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
@@ -138,7 +144,6 @@ const MobileMenuItems = () => (
 
 export const HomeNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   useEffect(() => {
     const handleScroll = () => {
       const navbar = document.querySelector(".glass-navbar") as HTMLElement;
@@ -158,43 +163,46 @@ export const HomeNavbar = () => {
   }, []);
 
   return (
-    <HeroUINavbar
-      className={clsx(
-        "glass-navbar",
-        "z-50 fixed left-1/2 -translate-x-1/2 top-5 w-[90%] rounded-full dark:border-2",
-        "border border-[var(--navbar-border)] bg-[var(--navbar-bg)] backdrop-blur-2xl",
-        "shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-all duration-300"
-      )}
-      isBordered
-      isBlurred
-      maxWidth="full"
-      position="sticky"
-    >
-      <NavbarContent justify="start">
-        <NavbarBrand className=" ">
-          <Link href={"/"}>
-          <Themebasedlogo
-            lightLogo={WhiteLogo}
-            darkLogo={BlackLogo}
-            alt="Lit Lab Full Logo"
-            height={40}
-          /></Link>
-        </NavbarBrand>
-      </NavbarContent>
+    <SessionProvider>
+      <HeroUINavbar
+        className={clsx(
+          "glass-navbar",
+          "z-50 fixed left-1/2 -translate-x-1/2 top-5 w-[90%] rounded-full dark:border-2",
+          "border border-[var(--navbar-border)] bg-[var(--navbar-bg)] backdrop-blur-2xl",
+          "shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-all duration-300"
+        )}
+        isBordered
+        isBlurred
+        maxWidth="full"
+        position="sticky"
+      >
+        <NavbarContent justify="start">
+          <NavbarBrand className=" ">
+            <Link href={"/"}>
+              <Themebasedlogo
+                lightLogo={WhiteLogo}
+                darkLogo={BlackLogo}
+                alt="Lit Lab Full Logo"
+                height={40}
+              />
+            </Link>
+          </NavbarBrand>
+        </NavbarContent>
 
-      <DesktopNavLinks />
+        <DesktopNavLinks />
 
-      <NavbarContent justify="end">
-        <AuthLinks isLoginned={false} />
-        <ThemeSwitch />
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        />
-      </NavbarContent>
+        <NavbarContent justify="end">
+          <AuthLinks />
+          <ThemeSwitch />
+          <NavbarMenuToggle
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            className="sm:hidden"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          />
+        </NavbarContent>
 
-      <MobileMenuItems />
-    </HeroUINavbar>
+        <MobileMenuItems />
+      </HeroUINavbar>
+    </SessionProvider>
   );
 };

@@ -1,102 +1,116 @@
 "use client";
 
+import { useState, useTransition } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Input } from "@heroui/input";
 import { form as formClass, button as buttonClass } from "@heroui/theme";
-import { useState, useTransition } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { MdOutlineDangerous } from "react-icons/md";
 import { Divider } from "@heroui/divider";
 import Link from "next/link";
-import { login } from "@/actions/auth/login";
-import { useRouter } from "next/navigation";
-import { MdOutlineDangerous } from "react-icons/md";
 
 export default function LoginForm() {
   const [isVisible, setIsVisible] = useState(false);
-  const toggleVisibility = () => setIsVisible(!isVisible);
-
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+  const params = useSearchParams();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  // If NextAuth ever redirects back with `?error=...`, show that
+  useState(() => {
+    const err = params.get("error");
+    if (err) setErrorMsg(err);
+  });
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setErrorMsg(null);
+
     const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
 
     startTransition(async () => {
-      const result = await login(formData);
+      const res = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+        callbackUrl: "/dashboard",
+      });
 
-      if (result?.error) {
-        setError(result.error);
+      if (res?.error) {
+        // NextAuth returns the Error.message you threw in authorize()
+        setErrorMsg(res.error);
+      } else {
+        router.push(res?.url || "/dashboard");
       }
     });
-  };
+  }
 
   return (
-    <>
-      <form
-        onSubmit={handleSubmit}
-        className={formClass({ className: "space-y-4" })}
-      >
-        <Input
-          label="Email"
-          type="email"
-          name="email"
-          required
-          variant="bordered"
-          size="sm"
-        />
+    <form
+      onSubmit={handleSubmit}
+      className={formClass({ className: "space-y-4" })}
+    >
+      <Input
+        label="Email"
+        name="email"
+        type="email"
+        required
+        variant="bordered"
+        size="sm"
+      />
 
-        <Input
-          label="Password"
-          type={isVisible ? "text" : "password"}
-          name="password"
-          variant="bordered"
-          size="sm"
-          required
-          className="w-full"
-          endContent={
-            <button
-              type="button"
-              onClick={toggleVisibility}
-              className="focus:outline-none"
-            >
-              {isVisible ? (
-                <FaEyeSlash className="text-2xl text-default-400 pointer-events-none" />
-              ) : (
-                <FaEye className="text-2xl text-default-400 pointer-events-none" />
-              )}
-            </button>
-          }
-        />
-        {error && (
-          <div
-            className="text-red-500 text-sm bg-red-100  flex pt-3 pb-3 pl-2 rounded-lg  w-full  
-                "
+      <Input
+        label="Password"
+        name="password"
+        type={isVisible ? "text" : "password"}
+        required
+        variant="bordered"
+        size="sm"
+        className="w-full"
+        endContent={
+          <button
+            type="button"
+            onClick={() => setIsVisible((v) => !v)}
+            className="focus:outline-none"
           >
-            <MdOutlineDangerous size={20} />
-            {error}
-          </div>
-        )}
+            {isVisible ? (
+              <FaEyeSlash className="text-2xl" />
+            ) : (
+              <FaEye className="text-2xl" />
+            )}
+          </button>
+        }
+      />
 
-        <button
-          type="submit"
-          className={`${buttonClass({ className: "w-full" })} text-white`}
-          disabled={isPending}
-          style={{ backgroundColor: "var(--color-accent)" }}
-        >
-          {isPending ? "Logging In..." : "Log In"}
-        </button>
-      </form>
-      <br />
+      {errorMsg && (
+        <div className="flex items-center gap-2 text-red-600 bg-red-100 p-2 rounded">
+          <MdOutlineDangerous size={20} /> <span>{errorMsg}</span>
+        </div>
+      )}
+
+      <button
+        type="submit"
+        disabled={isPending}
+        className={`${buttonClass({ className: "w-full" })} text-white`}
+        style={{ backgroundColor: "var(--color-accent)" }}
+      >
+        {isPending ? "Logging in…" : "Log in"}
+      </button>
+
+
       <Divider className="h-[0.5] text-black" />
-      <div className="flex align-center justify-center pt-3 text-sm">
+      <div className="flex align-center justify-center pt-2 text-sm w-full">
         Don't have an Account ?
         <Link
-          href="signup"
+          href="/signup"
           className="text-indigo-500 dark:text-indigo-300 pl-2"
         >
           Sign Up
         </Link>
       </div>
-    </>
+    </form>
   );
 }

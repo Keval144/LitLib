@@ -1,4 +1,4 @@
-"use server";
+
 import LoginForm from "@/components/auth/loginform";
 import { Metadata } from "next";
 

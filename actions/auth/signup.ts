@@ -1,11 +1,10 @@
 //actions/auth/signup.ts
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import bcrypt from "bcrypt";
 import { z } from "zod";
 import { redirect } from "next/navigation";
-
 
 const schema = z.object({
   firstname: z.string().min(1, "First name is required"),
@@ -57,7 +56,7 @@ export async function signup(formData: FormData) {
       data: {
         firstName: firstname,
         lastName: lastname,
-        email,
+        email: email,
         role: "PATRON",
         password: hashedPassword,
       },
