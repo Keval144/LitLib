@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Input } from "@heroui/input";
@@ -17,10 +17,10 @@ export default function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
 
-  useState(() => {
+  useEffect(() => {
     const err = params.get("error");
     if (err) setErrorMsg(err);
-  });
+  }, [params]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -98,7 +98,6 @@ export default function LoginForm() {
       >
         {isPending ? "Logging in…" : "Log in"}
       </button>
-
 
       <Divider className="h-[0.5] text-black" />
       <div className="flex align-center justify-center pt-2 text-sm w-full">
