@@ -61,10 +61,9 @@ export async function signup(formData: FormData) {
         password: hashedPassword,
       },
     });
+    redirect("/login");
   } catch (error) {
     console.error("Signup failed:", error);
     return { error: "Internal server error" };
-  } finally {
-    redirect("/login");
   }
 }

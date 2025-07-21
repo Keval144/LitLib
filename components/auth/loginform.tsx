@@ -79,7 +79,8 @@ export default function LoginForm() {
       />
 
       {errorMsg && (
-        <div className="flex items-center gap-2 text-red-600 bg-red-100 p-2 rounded">
+        <div 
+            className="text-red-500 text-sm bg-red-100  flex pt-3 pb-3 pl-2 rounded-lg  w-full " >
           <MdOutlineDangerous size={20} /> <span>{errorMsg}</span>
         </div>
       )}
