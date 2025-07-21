@@ -14,13 +14,7 @@ export default function LoginForm() {
   const [isVisible, setIsVisible] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
-  const params = useSearchParams();
-
-  useEffect(() => {
-    const err = params.get("error");
-    if (err) setErrorMsg(err);
-  }, [params]);
+  const router = useRouter()
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
