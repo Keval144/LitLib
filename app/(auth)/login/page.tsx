@@ -1,16 +1,13 @@
-
+"use client";
 import LoginForm from "@/components/auth/loginform";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Login",
-  description: "Login Page to Reserve Books and Library",
-};
+import { SessionProvider } from "next-auth/react";
 
 export default function LoginPage() {
   return (
     <>
-      <LoginForm />
+      <SessionProvider>
+        <LoginForm />
+      </SessionProvider>
     </>
   );
 }

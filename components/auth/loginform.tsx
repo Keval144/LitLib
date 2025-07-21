@@ -17,7 +17,6 @@ export default function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
 
-  // If NextAuth ever redirects back with `?error=...`, show that
   useState(() => {
     const err = params.get("error");
     if (err) setErrorMsg(err);
