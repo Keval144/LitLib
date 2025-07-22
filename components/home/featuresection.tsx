@@ -4,6 +4,7 @@ import { MdPhoneIphone, MdAnalytics } from "react-icons/md";
 import { FiLock } from "react-icons/fi";
 import { HiBolt } from "react-icons/hi2";
 import clsx from "clsx";
+import SpotlightCard from "../blocks/Components/SpotlightCard/SpotlightCard";
 
 type Feature = {
   icon: React.ReactNode;
@@ -47,26 +48,13 @@ const features: Feature[] = [
 // Card Component
 function FeatureCard({ feature }: { feature: Feature }) {
   return (
-    <div
-      className={clsx(
-        "bg-[var(--color-card)] border border-[var(--color-border)] rounded-xl p-6",
-        "transition-transform duration-300 ease-out",
-        "hover:-translate-y-2 hover:shadow-lg",
-        "will-change-transform"
-      )}
-    >
-      <div className="flex items-center justify-center mb-4">
-        <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-400 text-white shadow-lg flex items-center justify-center">
-          {feature.icon}
-        </div>
+    <SpotlightCard spotlightColor="rgba(255, 255, 255, 0.2)">
+      <div className="text-left dark:text-white mb-4">
+        <div className="w-14 h-14">{feature.icon}</div>
       </div>
-      <h3 className="text-xl font-semibold text-[var(--color-text)] mb-2">
-        {feature.title}
-      </h3>
-      <p className="text-[var(--color-text-secondary)] text-sm leading-relaxed">
-        {feature.desc}
-      </p>
-    </div>
+      <h3 className="text-left text-xl font-semibold mb-2">{feature.title}</h3>
+      <p className="text-left text-sm leading-relaxed">{feature.desc}</p>
+    </SpotlightCard>
   );
 }
 

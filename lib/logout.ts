@@ -9,7 +9,6 @@ export function useLogout() {
   const logout = async () => {
     await signOut({ redirect: false });
     router.push("/");
-    router.refresh();
     window.location.reload();
   };
 

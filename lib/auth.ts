@@ -12,17 +12,26 @@ const authOptions: NextAuthOptions = {
     Credentials({
       name: "Email & Password",
       credentials: {
-        email: { label: "Email", type: "email", placeholder: "you@example.com" },
+        email: {
+          label: "Email",
+          type: "email",
+          placeholder: "you@example.com",
+        },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) {
           throw new Error("Please enter both email and password");
         }
-        const user = await prisma.user.findUnique({ where: { email: credentials.email } });
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email },
+        });
         if (!user) throw new Error("No user found with that email");
 
-        const isValid = await bcrypt.compare(credentials.password, user.password);
+        const isValid = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
         if (!isValid) throw new Error("Incorrect password");
 
         return {
@@ -49,9 +58,6 @@ const authOptions: NextAuthOptions = {
       }
       return session;
     },
-  },
-  pages: {
-    error: "/login?error",
   },
 };
 
