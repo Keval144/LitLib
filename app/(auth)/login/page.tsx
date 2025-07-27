@@ -1,17 +1,13 @@
 "use client";
 
 import LoginForm from "@/components/auth/loginform";
-import { SessionProvider } from "next-auth/react";
-
+import { ToastHandler } from "@/components/auth/successtoast";
 
 export default function LoginPage() {
-
-    return (
-      <>
-        <SessionProvider>
-          <LoginForm/>
-        </SessionProvider>
-      </>
-    );
-  }
-
+  return (
+    <>
+      <LoginForm />
+      <ToastHandler />
+    </>
+  );
+}

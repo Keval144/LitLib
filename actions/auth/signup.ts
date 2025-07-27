@@ -4,7 +4,6 @@
 import prisma from "@/lib/prisma";
 import bcrypt from "bcrypt";
 import { z } from "zod";
-import { redirect } from "next/navigation";
 
 const schema = z.object({
   firstname: z.string().min(1, "First name is required"),
@@ -61,7 +60,7 @@ export async function signup(formData: FormData) {
         password: hashedPassword,
       },
     });
-    redirect("/login");
+    return { success: true, redirectUrl: "/login?success" };
   } catch (error) {
     console.error("Signup failed:", error);
     return { error: "Internal server error" };

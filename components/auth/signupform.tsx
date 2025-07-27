@@ -19,19 +19,23 @@ export default function SignUpForm() {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
+  const router = useRouter();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-
     startTransition(() => {
       signup(formData)
         .then((result) => {
           if (result?.error) {
             setError(result.error);
+          } else if (result?.success && result.redirectUrl) {
+            router.push(result.redirectUrl);
           }
         })
         .catch((err) => {
-          setError(err.message || "Something went wrong");
+          if (err.message !== "NEXT_REDIRECT") {
+            setError(err.message || "Something went wrong");
+          }
         });
     });
   };

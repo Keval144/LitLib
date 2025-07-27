@@ -4,7 +4,6 @@ import { Footer } from "@/components/common/footer";
 import ScrollToTop from "@/components/common/scrolltotop";
 import { SessionProvider } from "next-auth/react";
 
-
 export default function HomeLayout({
   children,
 }: {

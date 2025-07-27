@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Input } from "@heroui/input";
-import { form as formClass, button as buttonClass } from "@heroui/theme";
+import { form as formClass, button as buttonClass, toast } from "@heroui/theme";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdOutlineDangerous } from "react-icons/md";
 import { Divider } from "@heroui/divider";
@@ -14,7 +14,7 @@ export default function LoginForm() {
   const [isVisible, setIsVisible] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
-  const router = useRouter()
+  const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -33,7 +33,6 @@ export default function LoginForm() {
       });
 
       if (res?.error) {
-        // NextAuth returns the Error.message you threw in authorize()
         setErrorMsg(res.error);
       } else {
         router.push(res?.url || "/dashboard");
@@ -79,8 +78,7 @@ export default function LoginForm() {
       />
 
       {errorMsg && (
-        <div 
-            className="text-red-500 text-sm bg-red-100  flex pt-3 pb-3 pl-2 rounded-lg  w-full " >
+        <div className="text-red-500 text-sm bg-red-100  flex pt-3 pb-3 pl-2 rounded-lg  w-full ">
           <MdOutlineDangerous size={20} /> <span>{errorMsg}</span>
         </div>
       )}

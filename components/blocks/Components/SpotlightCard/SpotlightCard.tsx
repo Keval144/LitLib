@@ -38,13 +38,14 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
       onMouseEnter={() => handleHover(true)}
       onMouseLeave={() => handleHover(false)}
       className={`
-        relative rounded-2xl group
-        bg-indigo-700/70 text-slate-100 border-2 border-gray-700/70
-        dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100
+        relative rounded-2xl group text-black
+        bg-gradient-to-br from-[var(--color-bg)] to-[var(--color-card)]
+        hover:border-[#6366F1]/30 hover:border-indigo-500
+        border-2 border-gray-700/70
+        dark:text-slate-100
         overflow-hidden p-8 
         transition-all duration-300 ease-out
-        hover:shadow-lg hover:shadow-indigo-500/10
-        hover:border-[#6366F1]/30 dark:hover:border-indigo-500
+        hover:shadow-lg 
         hover:-translate-y-1
         ${className}
       `}

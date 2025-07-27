@@ -2,7 +2,6 @@ import Carousel, { Slide } from "@/components/auth/imageslider";
 import { Metadata } from "next";
 import Link from "next/link";
 import clsx from "clsx";
-import { Toaster } from "react-hot-toast";
 import { ThemeSwitch } from "@/components/common/theme-switch";
 
 export const metadata: Metadata = {
@@ -17,6 +16,7 @@ import BlackLogo from "@/public/assets/logos/black/blackfulllogo.png";
 import WhiteLogo from "@/public/assets/logos/white/whitefulllogo.png";
 import Themebasedlogo from "@/components/common/themebasedlogo";
 import Authfooter from "@/components/auth/authfooter";
+import ProvidersToast from "@/components/common/toast-provider";
 
 const slides: Slide[] = [
   { src: LibraryPhoto, alt: "A Guy in library holding IPad" },
@@ -30,7 +30,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <ProvidersToast>
       <section className="min-h-screen flex flex-col md:flex-row ">
         {/* Column 1: Carousel */}
         <div className="hidden md:block w-1/2 md:w-2/3 ">
@@ -82,7 +82,6 @@ export default function AuthLayout({
           <Authfooter />
         </div>
       </section>
-      <Toaster position="bottom-right" toastOptions={{ duration: 4000 }} />
-    </>
+    </ProvidersToast>
   );
 }

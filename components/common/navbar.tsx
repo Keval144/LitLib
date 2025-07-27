@@ -1,5 +1,14 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import clsx from "clsx";
+import ExpandButton from "@/components/button/signupbutton";
+
+import { SessionProvider, useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
+import { useLogout } from "@/hooks/uselogout";
+
 import {
   Navbar as HeroUINavbar,
   NavbarContent,
@@ -9,7 +18,6 @@ import {
   NavbarItem,
   NavbarMenuItem,
 } from "@heroui/navbar";
-
 import {
   DropdownItem,
   DropdownTrigger,
@@ -17,23 +25,12 @@ import {
   DropdownMenu,
   Avatar,
 } from "@heroui/react";
-
-import { useSession } from "next-auth/react";
 import { ThemeSwitch } from "@/components/common/theme-switch";
 
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import clsx from "clsx";
 import Themebasedlogo from "@/components/common/themebasedlogo";
-import ExpandButton from "@/components/button/signupbutton";
-
 import BlackLogo from "@/public/assets/logos/black/blackfulllogo.png";
 import WhiteLogo from "@/public/assets/logos/white/whitefulllogo.png";
 import { FaArrowUp } from "react-icons/fa6";
-import { usePathname } from "next/navigation";
-import { useLogout } from "@/lib/logout";
-import { IsUserLoggedIn } from "@/lib/isloggedin";
-import { SessionProvider } from "next-auth/react";
 
 const NAV_LINKS = [
   { name: "Search", href: "/search" },
@@ -42,7 +39,9 @@ const NAV_LINKS = [
 ];
 
 const DesktopNavLinks = () => {
+  //To Activate Highlight
   const pathname = usePathname();
+
   return (
     <NavbarContent className="hidden sm:flex space-x-5 px-20">
       {NAV_LINKS.map((link) => {
@@ -67,10 +66,11 @@ const DesktopNavLinks = () => {
 };
 
 const AuthLinks = () => {
-  const isLoginned = IsUserLoggedIn();
+  const { data: session, status } = useSession();
   const logout = useLogout();
-  const { data: session } = useSession();
-  if (!isLoginned) {
+
+  if (status === "loading") return null;
+  if (!session) {
     return (
       <>
         <NavbarItem className="hidden lg:flex hover:text-[hsl(var(--theme-accent-hover))]">
@@ -93,23 +93,27 @@ const AuthLinks = () => {
           <Avatar
             isBordered
             as="button"
-            className="transition-transform"
-            color="secondary"
-            name="Keval Kansagra"
+            name={session.user?.name || "User"}
             size="sm"
-            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+            color="secondary"
+            src={
+              session.user?.image ?? "https://i.pravatar.cc/150?u=placeholder"
+            }
           />
         </DropdownTrigger>
         <DropdownMenu aria-label="User Menu" variant="flat">
           <DropdownItem key="profile" className="h-14 gap-2">
             <p className="font-semibold">Signed in as</p>
-            <p className="font-semibold">{session?.user?.name}</p>
-            <p className="font-extralight">{session?.user.email}</p>
+            <p className="font-semibold">{session.user?.name}</p>
+            <p className="font-extralight">{session.user?.email}</p>
           </DropdownItem>
           <DropdownItem key="settings">My Settings</DropdownItem>
-
-          <DropdownItem key="logout" color="danger">
-            <button onClick={logout}>Log Out</button>
+          <DropdownItem
+            key="logout"
+            color="danger"
+            onClick={logout} // ← attach here
+          >
+            Log Out
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>

@@ -11,12 +11,11 @@ Manage books, members, analytics, and more — all from a beautiful, responsive 
 - [Next.js 14 (App Router)](https://nextjs.org/docs/app)
 - [HeroUI v2](https://heroui.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Framer Motion](https://www.framer.com/motion/)
 - [next-themes](https://github.com/pacocoursey/next-themes)
-- [Prisma + MySQL](https://www.prisma.io/)
-- [NextAuth.js](https://next-auth.js.org/)
+- [Prisma + Postgress](https://www.prisma.io/)
+- [NextAuth.js(JWT)](https://next-auth.js.org/)
 - [Shadcn UI](https://ui.shadcn.com/)
 - [React Icons](https://react-icons.github.io/react-icons/)
 
@@ -44,8 +43,27 @@ Manage books, members, analytics, and more — all from a beautiful, responsive 
 
 ```bash
 npm install
-# or
-pnpm install
-# or
-yarn
+```
+
+### 🔐 Make .env file
+
+```env
+//Database url
+DATABASE_URL=""
+
+// Image Auth Keys
+IMAGEKIT_PRIVATE_KEY=""
+NEXT_PUBLIC_PUBLIC_KEY=""
+NEXT_PUBLIC_URL_ENDPOINT=""
+
+NEXTAUTH_URL=""
+NEXTAUTH_SECRET=""
+
+NODE_ENV =""
+```
+
+### 🏗️ Run Project and generate database
+
+```bash
+    prisma generate && npm run dev
 ```

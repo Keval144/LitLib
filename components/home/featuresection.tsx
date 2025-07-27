@@ -48,12 +48,12 @@ const features: Feature[] = [
 // Card Component
 function FeatureCard({ feature }: { feature: Feature }) {
   return (
-    <SpotlightCard spotlightColor="rgba(255, 255, 255, 0.2)">
+    <SpotlightCard spotlightColor="rgba(255, 255, 255, 0.25)">
       <div className="text-left dark:text-white mb-4">
         <div className="w-14 h-14">{feature.icon}</div>
       </div>
       <h3 className="text-left text-xl font-semibold mb-2">{feature.title}</h3>
-      <p className="text-left text-sm leading-relaxed">{feature.desc}</p>
+      <p className="text-left text-sm leading-relaxed dark:text-gray-300 text-gray-700">{feature.desc}</p>
     </SpotlightCard>
   );
 }
