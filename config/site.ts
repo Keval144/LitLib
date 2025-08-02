@@ -71,6 +71,5 @@ export const siteConfig = {
 
 export const AuthConfig = {
   name: "LitLib - Authentication",
-  description:
-    "Authentication form of LitLib ",
+  description: "Authentication form of LitLib ",
 };

@@ -78,7 +78,7 @@ export default function LoginForm() {
       />
 
       {errorMsg && (
-        <div className="text-red-500 text-sm bg-red-100  flex pt-3 pb-3 pl-2 rounded-lg  w-full ">
+        <div className="flex w-full rounded-lg bg-red-100 pb-3 pl-2 pt-3 text-sm text-red-500">
           <MdOutlineDangerous size={20} /> <span>{errorMsg}</span>
         </div>
       )}
@@ -93,11 +93,11 @@ export default function LoginForm() {
       </button>
 
       <Divider className="h-[0.5] text-black" />
-      <div className="flex align-center justify-center pt-2 text-sm w-full">
+      <div className="align-center flex w-full justify-center pt-2 text-sm">
         Don't have an Account ?
         <Link
           href="/signup"
-          className="text-indigo-500 dark:text-indigo-300 pl-2"
+          className="pl-2 text-indigo-500 dark:text-indigo-300"
         >
           Sign Up
         </Link>

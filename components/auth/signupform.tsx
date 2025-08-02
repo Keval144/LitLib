@@ -1,16 +1,16 @@
 "use client";
 
-import { Input } from "@heroui/input";
-import { form as formClass, button as buttonClass } from "@heroui/theme";
 import { useState, useTransition } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Divider } from "@heroui/divider";
-import Link from "next/link";
-import { signup } from "@/actions/auth/signup";
 import { useRouter } from "next/navigation";
-import { BsInfo } from "react-icons/bs";
+import Link from "next/link";
+import { Input } from "@heroui/input";
 import { Tooltip } from "@heroui/react";
+import { Divider } from "@heroui/divider";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { BsInfo } from "react-icons/bs";
 import { MdOutlineDangerous } from "react-icons/md";
+import { form as formClass, button as buttonClass } from "@heroui/theme";
+import { signup } from "@/actions/auth/signup";
 
 export default function SignUpForm() {
   const [isVisible, setIsVisible] = useState(false);
@@ -20,9 +20,11 @@ export default function SignUpForm() {
   const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+
     startTransition(() => {
       signup(formData)
         .then((result) => {
@@ -46,42 +48,47 @@ export default function SignUpForm() {
         onSubmit={handleSubmit}
         className={formClass({ className: "space-y-4" })}
       >
-        <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+        {/* First + Last Name */}
+        <div className="flex w-full flex-wrap gap-4 md:flex-nowrap">
           <Input
-            label="First Name"
-            type="text"
-            required
-            variant="bordered"
-            size="sm"
             name="firstname"
+            type="text"
+            label="First Name"
+            required
+            size="sm"
+            variant="bordered"
+            className="w-full"
           />
           <Input
-            label="Last Name"
-            type="text"
-            required
-            variant="bordered"
-            size="sm"
             name="lastname"
+            type="text"
+            label="Last Name"
+            required
+            size="sm"
+            variant="bordered"
+            className="w-full"
           />
         </div>
 
+        {/* Email */}
         <Input
-          label="Email"
-          type="email"
-          required
-          variant="bordered"
-          size="sm"
           name="email"
+          type="email"
+          label="Email"
+          required
+          size="sm"
+          variant="bordered"
         />
 
-        <div className="flex items-end gap-2 w-full">
+        {/* Password + Info */}
+        <div className="flex min-h-[72px] w-full items-start gap-2">
           <Input
-            label="Password"
-            type={isVisible ? "text" : "password"}
-            variant="bordered"
-            size="sm"
-            required
             name="password"
+            label="Password"
+            required
+            type={isVisible ? "text" : "password"}
+            size="sm"
+            variant="bordered"
             className="flex-1"
             endContent={
               <button
@@ -90,21 +97,21 @@ export default function SignUpForm() {
                 className="focus:outline-none"
               >
                 {isVisible ? (
-                  <FaEyeSlash className="text-2xl text-default-400 pointer-events-none" />
+                  <FaEyeSlash className="text-xl text-default-400" />
                 ) : (
-                  <FaEye className="text-2xl text-default-400 pointer-events-none" />
+                  <FaEye className="text-xl text-default-400" />
                 )}
               </button>
             }
           />
 
           <Tooltip
+            placement="bottom"
+            offset={6}
             content={
               <div className="text-sm text-gray-500 dark:text-gray-100">
-                <p>
-                  <strong>Password requirements:</strong>
-                </p>
-                <ul className="list-disc list-inside">
+                <strong>Password requirements:</strong>
+                <ul className="list-inside list-disc">
                   <li>At least 6 characters</li>
                   <li>One uppercase letter</li>
                   <li>One number</li>
@@ -112,26 +119,25 @@ export default function SignUpForm() {
                 </ul>
               </div>
             }
-            placement="bottom"
           >
             <button
               type="button"
-              className="flex items-center justify-center bg-gray-200 hover:bg-gray-300 text-default-400 rounded-full h-7 w-7 transition shrink-0   mb-2"
+              className="flex h-7 w-7 mt-3 items-center justify-center rounded-full bg-gray-200 text-default-400 hover:bg-gray-300"
             >
               <BsInfo className="text-md" />
             </button>
           </Tooltip>
         </div>
 
+        {/* Error Display */}
         {error && (
-          <div
-            className="text-red-500 text-sm bg-red-100  flex pt-3 pb-3 pl-2 rounded-lg  w-full  
-        "
-          >
+          <div className="flex items-center gap-2 rounded-lg bg-red-100 p-3 text-sm text-red-500">
             <MdOutlineDangerous size={20} />
             {error}
           </div>
         )}
+
+        {/* Submit */}
         <button
           type="submit"
           disabled={isPending}
@@ -141,16 +147,19 @@ export default function SignUpForm() {
           {isPending ? "Creating Account..." : "Sign Up"}
         </button>
       </form>
-      <br />
-      <Divider className="h-[0.5] text-black" />
-      <div className="flex align-center justify-center pt-2 text-sm">
-        Already have an Account ?
-        <Link
-          href="/login"
-          className="text-indigo-500 dark:text-indigo-300 pl-2"
-        >
-          Login
-        </Link>
+
+      {/* Divider + Link */}
+      <div className="py-4">
+        <Divider />
+        <div className="flex justify-center pt-2 text-sm">
+          Already have an account?
+          <Link
+            href="/login"
+            className="pl-2 text-indigo-500 dark:text-indigo-300"
+          >
+            Login
+          </Link>
+        </div>
       </div>
     </>
   );

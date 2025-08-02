@@ -31,11 +31,12 @@ export default function HeroButton({
     <Button
       as={Link}
       href={href}
-      className={`${ // apply default styles only if variant is solid, else allow full control via className
+      className={`${
+        // apply default styles only if variant is solid, else allow full control via className
         variant === "solid"
           ? "rounded-full px-6 py-3 text-base font-semibold text-white shadow-md"
-          : className ?? ""
-      } ${variant !== "solid" ? className ?? "" : ""}`.trim()}
+          : (className ?? "")
+      } ${variant !== "solid" ? (className ?? "") : ""}`.trim()}
       style={style}
       variant={variant}
     >

@@ -46,12 +46,12 @@ export default function RootLayout({
       <ReactLenis>
         <body
           className={clsx(
-            "text-foreground bg-background font-sans antialiased",
-            fontSans.variable
+            "bg-background font-sans text-foreground antialiased",
+            fontSans.variable,
           )}
         >
           <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-            <div className="relative ">
+            <div className="relative">
               <div role="main" className="mx-auto">
                 {children}
               </div>

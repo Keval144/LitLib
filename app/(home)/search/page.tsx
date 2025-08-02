@@ -36,7 +36,7 @@ export default function Search() {
     setLoading(true);
     setTimeout(() => {
       const filtered = tabsData.filter((tab) =>
-        tab.label.toLowerCase().includes(searchTerm.toLowerCase())
+        tab.label.toLowerCase().includes(searchTerm.toLowerCase()),
       );
       setFilteredTabs(filtered.length > 0 ? filtered : tabsData);
       setLoading(false);
@@ -46,18 +46,18 @@ export default function Search() {
   return (
     <section
       id="Search"
-      className="relative min-h-[100dvh] w-full px-5 sm:px-10 pt-32 pb-16 bg-gradient-to-br from-[var(--color-bg)] to-[var(--color-card)]"
+      className="relative min-h-[100dvh] w-full bg-gradient-to-br from-[var(--color-bg)] to-[var(--color-card)] px-5 pb-16 pt-32 sm:px-10"
     >
-      <div className="relative max-w-7xl mx-auto space-y-3 z-10">
+      <div className="relative z-10 mx-auto max-w-7xl space-y-3">
         <h1 className="text-4xl font-bold text-black dark:text-white">
           Search Section
         </h1>
-        <p className="text-gray-600 dark:text-gray-200 text-medium mb">
+        <p className="mb text-medium text-gray-600 dark:text-gray-200">
           Search Thousands of Books
         </p>
 
         {/* Search Bar */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+        <div className="flex flex-col items-stretch gap-4 sm:flex-row sm:items-center">
           <Input
             isClearable
             value={searchTerm}
@@ -84,7 +84,7 @@ export default function Search() {
           <Button
             onClick={handleSearch}
             isLoading={loading}
-            className="bg-[var(--color-accent)] text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:brightness-110 transition"
+            className="rounded-lg bg-[var(--color-accent)] px-6 py-2 font-semibold text-white shadow-md transition hover:brightness-110"
           >
             {loading ? "Searching..." : "Submit"}
           </Button>
@@ -107,7 +107,7 @@ export default function Search() {
                 </div>
               }
             >
-              <Card className="shadow-lg  bg-[var(--navbar-bg)] border border-white/30 rounded-xl">
+              <Card className="rounded-xl border border-white/30 bg-[var(--navbar-bg)] shadow-lg">
                 <CardBody className="p-4 text-[var(--text-primary)]">
                   {item.content}
                 </CardBody>

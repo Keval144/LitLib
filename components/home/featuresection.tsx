@@ -49,11 +49,13 @@ const features: Feature[] = [
 function FeatureCard({ feature }: { feature: Feature }) {
   return (
     <SpotlightCard spotlightColor="rgba(255, 255, 255, 0.25)">
-      <div className="text-left dark:text-white mb-4">
-        <div className="w-14 h-14">{feature.icon}</div>
+      <div className="mb-4 text-left dark:text-white">
+        <div className="h-14 w-14">{feature.icon}</div>
       </div>
-      <h3 className="text-left text-xl font-semibold mb-2">{feature.title}</h3>
-      <p className="text-left text-sm leading-relaxed dark:text-gray-300 text-gray-700">{feature.desc}</p>
+      <h3 className="mb-2 text-left text-xl font-semibold">{feature.title}</h3>
+      <p className="text-left text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+        {feature.desc}
+      </p>
     </SpotlightCard>
   );
 }
@@ -63,17 +65,17 @@ export default function FeaturesSection() {
   return (
     <section
       className={clsx(
-        "py-24 px-5 sm:px-10 bg-[var(--color-bg)]",
-        "border-t border-[var(--color-border)]"
+        "bg-[var(--color-bg)] px-5 py-24 sm:px-10",
+        "border-t border-[var(--color-border)]",
       )}
       id="features"
     >
-      <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-4xl font-bold text-[var(--color-text)] mb-12">
+      <div className="mx-auto max-w-6xl text-center">
+        <h2 className="mb-12 text-4xl font-bold text-[var(--color-text)]">
           Why Choose LitLib?
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
             <FeatureCard key={index} feature={feature} />
           ))}

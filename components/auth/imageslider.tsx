@@ -31,12 +31,12 @@ const Carousel: React.FC<CarouselProps> = ({
   }, [autoSlide, autoSlideInterval]);
 
   return (
-    <div className="relative w-full h-[100dvh] overflow-hidden">
+    <div className="relative h-[100dvh] w-full overflow-hidden">
       {slides.map(({ src, alt }, idx) => (
         <div
           key={idx}
-          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
-            idx === current ? "opacity-100 z-10" : "opacity-0 z-0"
+          className={`absolute left-0 top-0 h-full w-full transition-opacity duration-1000 ease-in-out ${
+            idx === current ? "z-10 opacity-100" : "z-0 opacity-0"
           }`}
         >
           <Image

@@ -37,18 +37,7 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
       onMouseMove={handleMouseMove}
       onMouseEnter={() => handleHover(true)}
       onMouseLeave={() => handleHover(false)}
-      className={`
-        relative rounded-2xl group text-black
-        bg-gradient-to-br from-[var(--color-bg)] to-[var(--color-card)]
-        hover:border-[#6366F1]/30 hover:border-indigo-500
-        border-2 border-gray-700/70
-        dark:text-slate-100
-        overflow-hidden p-8 
-        transition-all duration-300 ease-out
-        hover:shadow-lg 
-        hover:-translate-y-1
-        ${className}
-      `}
+      className={`group relative overflow-hidden rounded-2xl border-2 border-gray-700/70 bg-gradient-to-br from-[var(--color-bg)] to-[var(--color-card)] p-8 text-black transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[#6366F1]/30 hover:border-indigo-500 hover:shadow-lg dark:text-slate-100 ${className} `}
     >
       {/* Main spotlight effect */}
       <div
@@ -60,7 +49,7 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
       />
 
       {/* Subtle border glow */}
-      <div className="pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-100" />
+      <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100" />
 
       {/* Content */}
       <div className="relative z-10">{children}</div>

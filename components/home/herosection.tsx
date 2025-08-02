@@ -7,22 +7,22 @@ export default function HeroSection() {
   return (
     <section
       className={clsx(
-        "min-h-[100dvh] flex items-center justify-center text-center px-5 sm:px-10 pt-32 pb-16",
-        "bg-gradient-to-br from-[var(--color-bg)] to-[var(--color-card)]"
+        "flex min-h-[100dvh] items-center justify-center px-5 pb-16 pt-32 text-center sm:px-10",
+        "bg-gradient-to-br from-[var(--color-bg)] to-[var(--color-card)]",
       )}
       id="home"
     >
-      <div className="max-w-3xl w-full animate-fadeInUp">
+      <div className="animate-fadeInUp w-full max-w-3xl">
         <h1
           className={clsx(
             "text-[clamp(3rem,10vw,5rem)] font-extrabold leading-tight",
             "bg-gradient-to-br from-[var(--color-text)] to-[var(--color-accent)] text-4xl",
-            "bg-clip-text text-transparent"
+            "bg-clip-text text-transparent",
           )}
         >
           Organize Knowledge Instantly.
         </h1>
-        <p className="mt-6 text-xs sm:text-xl  text-[var(--color-text-secondary)] max-w-xl mx-auto ">
+        <p className="mx-auto mt-6 max-w-xl text-xs text-[var(--color-text-secondary)] sm:text-xl">
           LitLib helps libraries manage books, members, and borrowing — fast and
           beautifully.
         </p>
@@ -37,7 +37,7 @@ export default function HeroSection() {
             href="https://github.com/keval144/litlib"
             label="Get Documentation"
             variant="bordered"
-            className="rounded-full px-6 py-3 text-base font-semibold border-[var(--color-border)] text-[var(--color-text)] border-2"
+            className="rounded-full border-2 border-[var(--color-border)] px-6 py-3 text-base font-semibold text-[var(--color-text)]"
           />
         </div>
       </div>

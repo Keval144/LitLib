@@ -31,21 +31,21 @@ export default function AuthLayout({
 }) {
   return (
     <ProvidersToast>
-      <section className="min-h-[100dvh] flex flex-col md:flex-row ">
+      <section className="flex min-h-[100dvh] flex-col md:flex-row">
         {/* Column 1: Carousel */}
-        <div className="hidden md:block w-1/2 md:w-2/3 ">
+        <div className="hidden w-1/2 md:block md:w-2/3">
           <Carousel slides={slides} autoSlide />
         </div>
         {/* Column 2: Content + Theme Switch + Logo */}
-        <div className="w-full md:w-1/3 p-6 relative flex flex-col">
+        <div className="relative flex w-full flex-col p-6 md:w-1/3">
           {/* Main Content */}
           <div
             className={clsx(
-              "w-full max-w-md mx-auto rounded-xl border-2 bg-[var(--navbar-bg)] backdrop-blur-md border-[var(--navbar-border)] opacity-80 shadow-lg p-6",
-              "sm:min-h-0 flex flex-col justify-center mb-8"
+              "mx-auto w-full max-w-md rounded-xl border-2 border-[var(--navbar-border)] bg-[var(--navbar-bg)] p-6 opacity-80 shadow-lg backdrop-blur-md",
+              "mb-8 flex flex-col justify-center sm:min-h-0",
             )}
           >
-            <div className="relative flex justify-center items-center ">
+            <div className="relative flex items-center justify-center">
               <Link href={"/"}>
                 <Themebasedlogo
                   lightLogo={WhiteLogo}
@@ -56,17 +56,17 @@ export default function AuthLayout({
               </Link>
 
               {/* Theme switch overlaps logo */}
-              <div className="absolute top-[-10px] right-[-10px] z-30 w-10 h-10 border-2 rounded-full flex items-center justify-center bg-[var(--navbar-bg)] backdrop-blur-md border-[var(--navbar-border)] shadow-lg">
+              <div className="absolute right-[-10px] top-[-10px] z-30 flex h-10 w-10 items-center justify-center rounded-full border-2 border-[var(--navbar-border)] bg-[var(--navbar-bg)] shadow-lg backdrop-blur-md">
                 <ThemeSwitch />
               </div>
             </div>
 
-            <div className="flex flex-col items-center justify-center p-4 text-center space-y-2">
+            <div className="flex flex-col items-center justify-center space-y-2 p-4 text-center">
               <div
                 className={clsx(
                   "text-[clamp(1.5rem,4vw,2rem)] font-extrabold",
                   "bg-gradient-to-br from-[var(--color-text)] to-[var(--color-accent)]",
-                  "bg-clip-text text-transparent"
+                  "bg-clip-text text-transparent",
                 )}
               >
                 Join our Library

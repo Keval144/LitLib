@@ -18,10 +18,10 @@ export default function ScrollToTop() {
 
   if (!visible) return null;
   return (
-    <Tooltip content="Scroll back to top" >
+    <Tooltip content="Scroll back to top">
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="fixed bottom-5 p-0 overflow-hidden end-5 z-5 h-10 w-10 rounded-full bg-indigo-500 text-white shadow-lg hover:bg-indigo-700 transition duration-200 ease-in-out flex items-center justify-center"
+        className="z-5 fixed bottom-5 end-5 flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-indigo-500 p-0 text-white shadow-lg transition duration-200 ease-in-out hover:bg-indigo-700"
       >
         <BsArrowUpCircle size={30} />
       </button>

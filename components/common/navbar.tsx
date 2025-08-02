@@ -43,7 +43,7 @@ const DesktopNavLinks = () => {
   const pathname = usePathname();
 
   return (
-    <NavbarContent className="hidden sm:flex space-x-5 px-20">
+    <NavbarContent className="hidden space-x-5 px-20 sm:flex">
       {NAV_LINKS.map((link) => {
         const isActive = pathname === link.href;
 
@@ -51,10 +51,7 @@ const DesktopNavLinks = () => {
           <NavbarItem key={link.name}>
             <Link
               href={link.href}
-              className={`
-                ${isActive ? "text-[hsl(var(--theme-accent))] font-semibold" : "black:text-white"}
-                hover:text-[hsl(var(--theme-accent-hover))]
-              `}
+              className={` ${isActive ? "font-semibold text-[hsl(var(--theme-accent))]" : "black:text-white"} hover:text-[hsl(var(--theme-accent-hover))]`}
             >
               {link.name}
             </Link>
@@ -73,10 +70,10 @@ const AuthLinks = () => {
   if (!session) {
     return (
       <>
-        <NavbarItem className="hidden lg:flex hover:text-[hsl(var(--theme-accent-hover))]">
+        <NavbarItem className="hidden hover:text-[hsl(var(--theme-accent-hover))] lg:flex">
           <Link href="/login">Login</Link>
         </NavbarItem>
-        <NavbarItem className="hidden lg:flex items-center gap-1">
+        <NavbarItem className="hidden items-center gap-1 lg:flex">
           <ExpandButton
             label="Sign Up"
             icon={<FaArrowUp size={15} className="rotate-45 text-white" />}
@@ -123,7 +120,7 @@ const AuthLinks = () => {
 
 const MENU_ITEMS = ["Profile", "Dashboard", "Help & Feedback", "Log Out"];
 const MobileMenuItems = () => (
-  <NavbarMenu className="fixed inset-0 z-20 bg-[var(--color-bg)]/80 backdrop-blur-lg !w-screen !h-screen">
+  <NavbarMenu className="bg-[var(--color-bg)]/80 fixed inset-0 z-20 !h-screen !w-screen backdrop-blur-lg">
     {MENU_ITEMS.map((item, index) => (
       <NavbarMenuItem key={`${item}-${index}`}>
         <div className={index === 0 ? "pt-20" : ""}>
@@ -132,10 +129,10 @@ const MobileMenuItems = () => (
             className={clsx(
               "w-full ps-10 text-base",
               index === 2 && "text-primary",
-              index === MENU_ITEMS.length - 1 && "text-red-600 font-semibold",
+              index === MENU_ITEMS.length - 1 && "font-semibold text-red-600",
               index !== 2 &&
                 index !== MENU_ITEMS.length - 1 &&
-                "text-foreground"
+                "text-foreground",
             )}
           >
             {item}
@@ -171,9 +168,9 @@ export const HomeNavbar = () => {
       <HeroUINavbar
         className={clsx(
           "glass-navbar",
-          "z-50 fixed left-1/2 -translate-x-1/2 top-5 w-[90%] rounded-full dark:border-2",
+          "fixed left-1/2 top-5 z-50 w-[90%] -translate-x-1/2 rounded-full dark:border-2",
           "border border-[var(--navbar-border)] bg-[var(--navbar-bg)] backdrop-blur-2xl",
-          "shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-all duration-300"
+          "shadow-[0_8px_32px_rgba(0,0,0,0.1)] transition-all duration-300 dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]",
         )}
         isBordered
         isBlurred

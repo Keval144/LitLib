@@ -58,8 +58,8 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-[var(--color-card)] border-t border-[var(--color-border)] pt-20 pb-10 px-5">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
+    <footer className="border-t border-[var(--color-border)] bg-[var(--color-card)] px-5 pb-10 pt-20">
+      <div className="mx-auto mb-10 grid max-w-6xl grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="mb-3">
             <ThemeBasedLogo
@@ -70,7 +70,7 @@ export function Footer() {
             />
           </div>
 
-          <h6 className="text-4xl font-logo tracking-tight text-[#373536] dark:text-white">
+          <h6 className="font-logo text-4xl tracking-tight text-[#373536] dark:text-white">
             <span className="font-extrabold">LIT</span>
             <span className="font-medium">LIB</span>
           </h6>
@@ -79,7 +79,7 @@ export function Footer() {
             institutions worldwide.
           </p>
 
-          <div className="flex gap-4 mt-4">
+          <div className="mt-4 flex gap-4">
             {Object.entries(socialLinks).map(
               ([name, { icon: Icon, url }], i) => (
                 <Link
@@ -87,27 +87,27 @@ export function Footer() {
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-[var(--color-accent)] text-white flex items-center justify-center hover:bg-[var(--color-accent-hover)] md:cursor-pointer"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] md:cursor-pointer"
                   title={name}
                 >
                   <Icon />
                 </Link>
-              )
+              ),
             )}
           </div>
         </div>
 
         {sections.map((section, i) => (
           <div key={i}>
-            <h3 className="text-lg font-semibold text-[var(--color-text)] mb-4">
+            <h3 className="mb-4 text-lg font-semibold text-[var(--color-text)]">
               {section.title}
             </h3>
-            <ul className="text-[var(--color-text-secondary)] space-y-2">
+            <ul className="space-y-2 text-[var(--color-text-secondary)]">
               {section.items.map((item, idx) => (
                 <li key={idx}>
                   <Link
                     href={item.href}
-                    className="hover:text-[var(--color-accent)] transition-colors"
+                    className="transition-colors hover:text-[var(--color-accent)]"
                   >
                     {item.name}
                   </Link>
@@ -118,7 +118,7 @@ export function Footer() {
         ))}
       </div>
 
-      <div className="text-center border-t border-[var(--color-border)] pt-6 text-[var(--color-text-secondary)]">
+      <div className="border-t border-[var(--color-border)] pt-6 text-center text-[var(--color-text-secondary)]">
         &copy; {format(todayDate, "yyyy")} LitLib. All rights reserved.
       </div>
     </footer>

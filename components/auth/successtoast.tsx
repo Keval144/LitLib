@@ -5,7 +5,6 @@ import { useEffect } from "react";
 
 export function ToastHandler() {
   const searchParams = useSearchParams();
-  console.log("outside Toast");
   useEffect(() => {
     if (searchParams.has("success")) {
       addToast({
@@ -13,7 +12,6 @@ export function ToastHandler() {
         description: "Please log in to continue.",
         color: "success",
       });
-      console.log("inside Toast");
     }
   }, [searchParams]);
 
