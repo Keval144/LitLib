@@ -7,7 +7,7 @@ export default function HeroSection() {
   return (
     <section
       className={clsx(
-        "min-h-screen flex items-center justify-center text-center px-5 sm:px-10 pt-32 pb-16",
+        "min-h-[100dvh] flex items-center justify-center text-center px-5 sm:px-10 pt-32 pb-16",
         "bg-gradient-to-br from-[var(--color-bg)] to-[var(--color-card)]"
       )}
       id="home"

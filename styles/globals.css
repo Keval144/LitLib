@@ -1,9 +1,17 @@
+/*styles/globals.css */
+
+/* Importing Tailwind Properties */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* styles/globals.css */
 
+/* Safe Area Colour */
+body {
+  background-color: var(--color-bg);
+}
+
+/*Theme Colours*/
 :root {
   --color-bg: #ffffff;
   --color-text: #111827;
@@ -36,4 +44,29 @@
 
   --theme-accent: 240 89% 76%;
   --theme-accent-hover: 240 89% 66%;
+}
+
+/* Lenis Property For Smooth Scrolling */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+.lenis.lenis-autoToggle {
+  transition-property: overflow;
+  transition-duration: 1ms;
+  transition-behavior: allow-discrete;
 }

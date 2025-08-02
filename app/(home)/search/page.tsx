@@ -46,7 +46,7 @@ export default function Search() {
   return (
     <section
       id="Search"
-      className="relative min-h-screen w-full px-5 sm:px-10 pt-32 pb-16 bg-gradient-to-br from-[var(--color-bg)] to-[var(--color-card)]"
+      className="relative min-h-[100dvh] w-full px-5 sm:px-10 pt-32 pb-16 bg-gradient-to-br from-[var(--color-bg)] to-[var(--color-card)]"
     >
       <div className="relative max-w-7xl mx-auto space-y-3 z-10">
         <h1 className="text-4xl font-bold text-black dark:text-white">

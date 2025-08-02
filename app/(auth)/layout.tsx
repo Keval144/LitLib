@@ -31,7 +31,7 @@ export default function AuthLayout({
 }) {
   return (
     <ProvidersToast>
-      <section className="min-h-screen flex flex-col md:flex-row ">
+      <section className="min-h-[100dvh] flex flex-col md:flex-row ">
         {/* Column 1: Carousel */}
         <div className="hidden md:block w-1/2 md:w-2/3 ">
           <Carousel slides={slides} autoSlide />

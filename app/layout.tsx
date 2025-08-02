@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import clsx from "clsx";
 import { Providers } from "./providers";
+import { ReactLenis } from "@/lib/lenis";
 
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
@@ -42,25 +43,25 @@ export default function RootLayout({
 }) {
   return (
     <html suppressHydrationWarning lang="en" data-scroll-behavior="smooth">
-      <head></head>
-
-      <body
-        className={clsx(
-          "text-foreground bg-background font-sans antialiased",
-          fontSans.variable
-        )}
-      >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <div className="relative ">
-            <div role="main" className="mx-auto">
-              {children}
+      <ReactLenis>
+        <body
+          className={clsx(
+            "text-foreground bg-background font-sans antialiased",
+            fontSans.variable
+          )}
+        >
+          <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+            <div className="relative ">
+              <div role="main" className="mx-auto">
+                {children}
+              </div>
             </div>
-          </div>
-        </Providers>
-        <SpeedInsights />
-        <Analytics />
-        <ScrollToTop />
-      </body>
+          </Providers>
+          <SpeedInsights />
+          <Analytics />
+          <ScrollToTop />
+        </body>
+      </ReactLenis>
     </html>
   );
 }
