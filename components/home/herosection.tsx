@@ -17,7 +17,7 @@ export default function HeroSection() {
           className={clsx(
             "text-[clamp(3rem,10vw,5rem)] font-extrabold leading-tight",
             "bg-gradient-to-br from-[var(--color-text)] to-[var(--color-accent)] text-4xl",
-            "bg-clip-text text-transparent",
+            "bg-clip-text text-transparent  ",
           )}
         >
           Organize Knowledge Instantly.

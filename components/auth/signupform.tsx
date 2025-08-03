@@ -122,7 +122,7 @@ export default function SignUpForm() {
           >
             <button
               type="button"
-              className="flex h-7 w-7 mt-3 items-center justify-center rounded-full bg-gray-200 text-default-400 hover:bg-gray-300"
+              className="mt-3 flex h-7 w-7 items-center justify-center rounded-full bg-gray-200 text-default-400 hover:bg-gray-300"
             >
               <BsInfo className="text-md" />
             </button>
@@ -131,9 +131,9 @@ export default function SignUpForm() {
 
         {/* Error Display */}
         {error && (
-          <div className="flex items-center gap-2 rounded-lg bg-red-100 p-3 text-sm text-red-500">
-            <MdOutlineDangerous size={20} />
-            {error}
+          <div className="flex w-full items-center gap-3 rounded-2xl bg-red-100 p-3 text-sm text-red-600">
+            <MdOutlineDangerous size={20} className="text-red-600" />
+            <span className="font-medium">{error}</span>
           </div>
         )}
 

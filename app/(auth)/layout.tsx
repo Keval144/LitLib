@@ -19,8 +19,8 @@ import Authfooter from "@/components/auth/authfooter";
 import ProvidersToast from "@/components/common/toast-provider";
 
 const slides: Slide[] = [
-  { src: LibraryPhoto, alt: "A Guy in library holding IPad" },
   { src: GirlGettingBook, alt: "Girl getting book from library" },
+  { src: LibraryPhoto, alt: "A Guy in library holding IPad" },
   { src: StudySpace, alt: "Study Space with Macbook and Books" },
 ];
 

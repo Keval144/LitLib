@@ -12,13 +12,13 @@ import Link from "next/link";
 
 export default function LoginForm() {
   const [isVisible, setIsVisible] = useState(false);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setErrorMsg(null);
+    setError(null);
 
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email") as string;
@@ -33,7 +33,7 @@ export default function LoginForm() {
       });
 
       if (res?.error) {
-        setErrorMsg(res.error);
+        setError(res.error);
       } else {
         router.push(res?.url || "/dashboard");
       }
@@ -77,9 +77,10 @@ export default function LoginForm() {
         }
       />
 
-      {errorMsg && (
-        <div className="flex w-full rounded-lg bg-red-100 pb-3 pl-2 pt-3 text-sm text-red-500">
-          <MdOutlineDangerous size={20} /> <span>{errorMsg}</span>
+      {error && (
+        <div className="flex w-full items-center gap-3 rounded-2xl bg-red-100 p-3 text-sm text-red-600">
+          <MdOutlineDangerous size={20} className="text-red-600" />
+          <span className="font-medium">{error}</span>
         </div>
       )}
 

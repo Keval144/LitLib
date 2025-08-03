@@ -102,14 +102,12 @@ const AuthLinks = () => {
           <DropdownItem key="profile" className="h-14 gap-2">
             <p className="font-semibold">Signed in as</p>
             <p className="font-semibold">{session.user?.name}</p>
+          </DropdownItem>
+          <DropdownItem key="email" >
             <p className="font-extralight">{session.user?.email}</p>
           </DropdownItem>
           <DropdownItem key="settings">My Settings</DropdownItem>
-          <DropdownItem
-            key="logout"
-            color="danger"
-            onClick={logout} // ← attach here
-          >
+          <DropdownItem key="logout" color="danger" onClick={logout}>
             Log Out
           </DropdownItem>
         </DropdownMenu>
