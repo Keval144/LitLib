@@ -1,20 +1,12 @@
-"use client";
-import { HomeNavbar } from "@/components/common/navbar";
-import { Footer } from "@/components/common/footer";
-import ScrollToTop from "@/components/common/scrolltotop";
-import { SessionProvider } from "next-auth/react";
+import { getUserRole } from "@/lib/authtype";
+import HomeLayoutClient from "./HomeLayoutClient";
 
-export default function HomeLayout({
+export default async function HomeLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <SessionProvider>
-      <HomeNavbar />
-      {children}
-      <Footer />
-      <ScrollToTop />
-    </SessionProvider>
-  );
+  const { role } = await getUserRole();
+
+  return <HomeLayoutClient role={role}>{children}</HomeLayoutClient>;
 }
