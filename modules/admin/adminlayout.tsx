@@ -15,6 +15,8 @@ import litliblogo from "@/public/icon1.png";
 import Link from "next/link";
 import { FaFile, FaFolder, FaFolderOpen } from "react-icons/fa";
 import { SidebarAccordion } from "@/components/common/SidebarAccordion";
+import { useSession } from "next-auth/react";
+import { useLogout } from "@/hooks/uselogout";
 
 export function LayoutAdmin({ children }: { children: React.ReactNode }) {
   const links = [
@@ -69,6 +71,8 @@ export function LayoutAdmin({ children }: { children: React.ReactNode }) {
     },
   ];
   const [open, setOpen] = useState(false);
+  const { data: session, status } = useSession();
+  const logout = useLogout();
 
   return (
     <div
@@ -96,11 +100,14 @@ export function LayoutAdmin({ children }: { children: React.ReactNode }) {
                   sidebarOpen={open}
                 />
               ))}
-              <SidebarLink
+              <button
                 key="logout"
-                link={links[links.length - 1]}
-                className="text-red-600"
-              />
+                onClick={logout}
+                className="flex items-center gap-2 rounded px-2 py-1 text-red-600 hover:bg-red-100"
+              >
+                {links[links.length - 1].icon}
+                <span>{links[links.length - 1].label}</span>
+              </button>
             </div>
           </div>
 
