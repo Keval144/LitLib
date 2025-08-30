@@ -17,6 +17,7 @@ import { FaFile, FaFolder, FaFolderOpen } from "react-icons/fa";
 import { SidebarAccordion } from "@/components/common/SidebarAccordion";
 import { useSession } from "next-auth/react";
 import { useLogout } from "@/hooks/uselogout";
+import { divider } from "@heroui/theme";
 
 export function LayoutAdmin({ children }: { children: React.ReactNode }) {
   const links = [
@@ -75,67 +76,65 @@ export function LayoutAdmin({ children }: { children: React.ReactNode }) {
   const logout = useLogout();
 
   return (
-    <div
-      className={cn(
-        "mx-auto flex w-full flex-1 flex-col overflow-hidden rounded-md border border-neutral-200 bg-gray-100 dark:border-neutral-700 dark:bg-neutral-800 md:flex-row",
-        "h-screen",
-      )}
-    >
-      <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="justify-between gap-10">
-          <div className="flex flex-1 flex-col overflow-y-auto overflow-x-hidden scrollbar-hide">
-            {open ? <Logo /> : <LogoIcon />}
-            <div className="mt-8 flex flex-col gap-2">
-              {/* Render everything except last */}
-              {links.slice(0, -1).map((link, idx) => (
-                <SidebarLink key={idx} link={link} />
-              ))}
-              {accordions.map((acc, idx) => (
-                <SidebarAccordion
-                  key={idx}
-                  title={acc.title}
-                  items={acc.items}
-                  openIcon={acc.openIcon}
-                  closedIcon={acc.closedIcon}
-                  sidebarOpen={open}
+    <>
+      <div className="flex sm:flex-row lg:flex-col">
+        <div className="w-max sm:z-10 sm:h-0">
+          <Sidebar open={open} setOpen={setOpen}>
+            <SidebarBody className="h-screen w-auto justify-between gap-10 sm:h-0">
+              <div className="flex flex-1 flex-col overflow-y-auto overflow-x-hidden scrollbar-hide">
+                {open ? <Logo /> : <LogoIcon />}
+                <div className="mt-8 flex flex-col gap-2">
+                  {/* Render everything except last */}
+                  {links.slice(0, -1).map((link, idx) => (
+                    <SidebarLink key={idx} link={link} />
+                  ))}
+                  {accordions.map((acc, idx) => (
+                    <SidebarAccordion
+                      key={idx}
+                      title={acc.title}
+                      items={acc.items}
+                      openIcon={acc.openIcon}
+                      closedIcon={acc.closedIcon}
+                      sidebarOpen={open}
+                    />
+                  ))}
+                  <button
+                    key="logout"
+                    onClick={logout}
+                    className="flex items-center gap-2 rounded px-2 py-1 text-red-600 hover:bg-red-100"
+                  >
+                    {links[links.length - 1].icon}
+                    <span>{links[links.length - 1].label}</span>
+                  </button>
+                </div>
+              </div>
+              <div className="flex flex-col gap-3">
+                <SidebarLink
+                  link={{
+                    label: "Manu Arora",
+                    href: "#",
+                    icon: (
+                      <img
+                        src="https://assets.aceternity.com/manu.png"
+                        className="h-7 w-7 shrink-0 rounded-full"
+                        width={50}
+                        height={50}
+                        alt="Avatar"
+                      />
+                    ),
+                  }}
                 />
-              ))}
-              <button
-                key="logout"
-                onClick={logout}
-                className="flex items-center gap-2 rounded px-2 py-1 text-red-600 hover:bg-red-100"
-              >
-                {links[links.length - 1].icon}
-                <span>{links[links.length - 1].label}</span>
-              </button>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-3">
-            <SidebarLink
-              link={{
-                label: "Manu Arora",
-                href: "#",
-                icon: (
-                  <img
-                    src="https://assets.aceternity.com/manu.png"
-                    className="h-7 w-7 shrink-0 rounded-full"
-                    width={50}
-                    height={50}
-                    alt="Avatar"
-                  />
-                ),
-              }}
-            />
-            {/* Add ThemeSwitch component here */}
-            <div className="px-3 py-1">
-              <ThemeSwitch />
-            </div>
-          </div>
-        </SidebarBody>
-      </Sidebar>
-      {children}
-    </div>
+              </div>
+              {/* Add ThemeSwitch component here */}
+              <div className="px-3 py-1">
+                <ThemeSwitch />
+              </div>
+            </SidebarBody>
+          </Sidebar>
+        </div>
+        {children}
+      </div>
+    </>
   );
 }
 

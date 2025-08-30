@@ -3176,11 +3176,13 @@ export namespace Prisma {
   export type LibraryItemAvgAggregateOutputType = {
     id: number | null
     yearPublished: number | null
+    borrowCount: number | null
   }
 
   export type LibraryItemSumAggregateOutputType = {
     id: number | null
     yearPublished: number | null
+    borrowCount: number | null
   }
 
   export type LibraryItemMinAggregateOutputType = {
@@ -3194,6 +3196,7 @@ export namespace Prisma {
     edition: string | null
     shelfLocation: string | null
     status: $Enums.ItemStatus | null
+    borrowCount: number | null
     coverImage: string | null
     description: string | null
     isReference: boolean | null
@@ -3214,6 +3217,7 @@ export namespace Prisma {
     edition: string | null
     shelfLocation: string | null
     status: $Enums.ItemStatus | null
+    borrowCount: number | null
     coverImage: string | null
     description: string | null
     isReference: boolean | null
@@ -3236,6 +3240,7 @@ export namespace Prisma {
     edition: number
     shelfLocation: number
     status: number
+    borrowCount: number
     coverImage: number
     description: number
     isReference: number
@@ -3250,11 +3255,13 @@ export namespace Prisma {
   export type LibraryItemAvgAggregateInputType = {
     id?: true
     yearPublished?: true
+    borrowCount?: true
   }
 
   export type LibraryItemSumAggregateInputType = {
     id?: true
     yearPublished?: true
+    borrowCount?: true
   }
 
   export type LibraryItemMinAggregateInputType = {
@@ -3268,6 +3275,7 @@ export namespace Prisma {
     edition?: true
     shelfLocation?: true
     status?: true
+    borrowCount?: true
     coverImage?: true
     description?: true
     isReference?: true
@@ -3288,6 +3296,7 @@ export namespace Prisma {
     edition?: true
     shelfLocation?: true
     status?: true
+    borrowCount?: true
     coverImage?: true
     description?: true
     isReference?: true
@@ -3310,6 +3319,7 @@ export namespace Prisma {
     edition?: true
     shelfLocation?: true
     status?: true
+    borrowCount?: true
     coverImage?: true
     description?: true
     isReference?: true
@@ -3419,6 +3429,7 @@ export namespace Prisma {
     edition: string | null
     shelfLocation: string | null
     status: $Enums.ItemStatus
+    borrowCount: number
     coverImage: string | null
     description: string | null
     isReference: boolean
@@ -3460,6 +3471,7 @@ export namespace Prisma {
     edition?: boolean
     shelfLocation?: boolean
     status?: boolean
+    borrowCount?: boolean
     coverImage?: boolean
     description?: boolean
     isReference?: boolean
@@ -3485,6 +3497,7 @@ export namespace Prisma {
     edition?: boolean
     shelfLocation?: boolean
     status?: boolean
+    borrowCount?: boolean
     coverImage?: boolean
     description?: boolean
     isReference?: boolean
@@ -3507,6 +3520,7 @@ export namespace Prisma {
     edition?: boolean
     shelfLocation?: boolean
     status?: boolean
+    borrowCount?: boolean
     coverImage?: boolean
     description?: boolean
     isReference?: boolean
@@ -3529,6 +3543,7 @@ export namespace Prisma {
     edition?: boolean
     shelfLocation?: boolean
     status?: boolean
+    borrowCount?: boolean
     coverImage?: boolean
     description?: boolean
     isReference?: boolean
@@ -3538,7 +3553,7 @@ export namespace Prisma {
     deletedAt?: boolean
   }
 
-  export type LibraryItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "author" | "publisher" | "isbn" | "itemType" | "categories" | "languages" | "yearPublished" | "edition" | "shelfLocation" | "status" | "coverImage" | "description" | "isReference" | "isDeleted" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["libraryItem"]>
+  export type LibraryItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "author" | "publisher" | "isbn" | "itemType" | "categories" | "languages" | "yearPublished" | "edition" | "shelfLocation" | "status" | "borrowCount" | "coverImage" | "description" | "isReference" | "isDeleted" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["libraryItem"]>
   export type LibraryItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     borrowings?: boolean | LibraryItem$borrowingsArgs<ExtArgs>
     reservations?: boolean | LibraryItem$reservationsArgs<ExtArgs>
@@ -3566,6 +3581,7 @@ export namespace Prisma {
       edition: string | null
       shelfLocation: string | null
       status: $Enums.ItemStatus
+      borrowCount: number
       coverImage: string | null
       description: string | null
       isReference: boolean
@@ -4010,6 +4026,7 @@ export namespace Prisma {
     readonly edition: FieldRef<"LibraryItem", 'String'>
     readonly shelfLocation: FieldRef<"LibraryItem", 'String'>
     readonly status: FieldRef<"LibraryItem", 'ItemStatus'>
+    readonly borrowCount: FieldRef<"LibraryItem", 'Int'>
     readonly coverImage: FieldRef<"LibraryItem", 'String'>
     readonly description: FieldRef<"LibraryItem", 'String'>
     readonly isReference: FieldRef<"LibraryItem", 'Boolean'>
@@ -12590,6 +12607,7 @@ export namespace Prisma {
     edition: 'edition',
     shelfLocation: 'shelfLocation',
     status: 'status',
+    borrowCount: 'borrowCount',
     coverImage: 'coverImage',
     description: 'description',
     isReference: 'isReference',
@@ -13011,6 +13029,7 @@ export namespace Prisma {
     edition?: StringNullableFilter<"LibraryItem"> | string | null
     shelfLocation?: StringNullableFilter<"LibraryItem"> | string | null
     status?: EnumItemStatusFilter<"LibraryItem"> | $Enums.ItemStatus
+    borrowCount?: IntFilter<"LibraryItem"> | number
     coverImage?: StringNullableFilter<"LibraryItem"> | string | null
     description?: StringNullableFilter<"LibraryItem"> | string | null
     isReference?: BoolFilter<"LibraryItem"> | boolean
@@ -13035,6 +13054,7 @@ export namespace Prisma {
     edition?: SortOrderInput | SortOrder
     shelfLocation?: SortOrderInput | SortOrder
     status?: SortOrder
+    borrowCount?: SortOrder
     coverImage?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     isReference?: SortOrder
@@ -13062,6 +13082,7 @@ export namespace Prisma {
     edition?: StringNullableFilter<"LibraryItem"> | string | null
     shelfLocation?: StringNullableFilter<"LibraryItem"> | string | null
     status?: EnumItemStatusFilter<"LibraryItem"> | $Enums.ItemStatus
+    borrowCount?: IntFilter<"LibraryItem"> | number
     coverImage?: StringNullableFilter<"LibraryItem"> | string | null
     description?: StringNullableFilter<"LibraryItem"> | string | null
     isReference?: BoolFilter<"LibraryItem"> | boolean
@@ -13086,6 +13107,7 @@ export namespace Prisma {
     edition?: SortOrderInput | SortOrder
     shelfLocation?: SortOrderInput | SortOrder
     status?: SortOrder
+    borrowCount?: SortOrder
     coverImage?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     isReference?: SortOrder
@@ -13116,6 +13138,7 @@ export namespace Prisma {
     edition?: StringNullableWithAggregatesFilter<"LibraryItem"> | string | null
     shelfLocation?: StringNullableWithAggregatesFilter<"LibraryItem"> | string | null
     status?: EnumItemStatusWithAggregatesFilter<"LibraryItem"> | $Enums.ItemStatus
+    borrowCount?: IntWithAggregatesFilter<"LibraryItem"> | number
     coverImage?: StringNullableWithAggregatesFilter<"LibraryItem"> | string | null
     description?: StringNullableWithAggregatesFilter<"LibraryItem"> | string | null
     isReference?: BoolWithAggregatesFilter<"LibraryItem"> | boolean
@@ -13821,6 +13844,7 @@ export namespace Prisma {
     edition?: string | null
     shelfLocation?: string | null
     status?: $Enums.ItemStatus
+    borrowCount?: number
     coverImage?: string | null
     description?: string | null
     isReference?: boolean
@@ -13845,6 +13869,7 @@ export namespace Prisma {
     edition?: string | null
     shelfLocation?: string | null
     status?: $Enums.ItemStatus
+    borrowCount?: number
     coverImage?: string | null
     description?: string | null
     isReference?: boolean
@@ -13868,6 +13893,7 @@ export namespace Prisma {
     edition?: NullableStringFieldUpdateOperationsInput | string | null
     shelfLocation?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumItemStatusFieldUpdateOperationsInput | $Enums.ItemStatus
+    borrowCount?: IntFieldUpdateOperationsInput | number
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     isReference?: BoolFieldUpdateOperationsInput | boolean
@@ -13892,6 +13918,7 @@ export namespace Prisma {
     edition?: NullableStringFieldUpdateOperationsInput | string | null
     shelfLocation?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumItemStatusFieldUpdateOperationsInput | $Enums.ItemStatus
+    borrowCount?: IntFieldUpdateOperationsInput | number
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     isReference?: BoolFieldUpdateOperationsInput | boolean
@@ -13916,6 +13943,7 @@ export namespace Prisma {
     edition?: string | null
     shelfLocation?: string | null
     status?: $Enums.ItemStatus
+    borrowCount?: number
     coverImage?: string | null
     description?: string | null
     isReference?: boolean
@@ -13937,6 +13965,7 @@ export namespace Prisma {
     edition?: NullableStringFieldUpdateOperationsInput | string | null
     shelfLocation?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumItemStatusFieldUpdateOperationsInput | $Enums.ItemStatus
+    borrowCount?: IntFieldUpdateOperationsInput | number
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     isReference?: BoolFieldUpdateOperationsInput | boolean
@@ -13959,6 +13988,7 @@ export namespace Prisma {
     edition?: NullableStringFieldUpdateOperationsInput | string | null
     shelfLocation?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumItemStatusFieldUpdateOperationsInput | $Enums.ItemStatus
+    borrowCount?: IntFieldUpdateOperationsInput | number
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     isReference?: BoolFieldUpdateOperationsInput | boolean
@@ -14881,6 +14911,7 @@ export namespace Prisma {
     edition?: SortOrder
     shelfLocation?: SortOrder
     status?: SortOrder
+    borrowCount?: SortOrder
     coverImage?: SortOrder
     description?: SortOrder
     isReference?: SortOrder
@@ -14893,6 +14924,7 @@ export namespace Prisma {
   export type LibraryItemAvgOrderByAggregateInput = {
     id?: SortOrder
     yearPublished?: SortOrder
+    borrowCount?: SortOrder
   }
 
   export type LibraryItemMaxOrderByAggregateInput = {
@@ -14906,6 +14938,7 @@ export namespace Prisma {
     edition?: SortOrder
     shelfLocation?: SortOrder
     status?: SortOrder
+    borrowCount?: SortOrder
     coverImage?: SortOrder
     description?: SortOrder
     isReference?: SortOrder
@@ -14926,6 +14959,7 @@ export namespace Prisma {
     edition?: SortOrder
     shelfLocation?: SortOrder
     status?: SortOrder
+    borrowCount?: SortOrder
     coverImage?: SortOrder
     description?: SortOrder
     isReference?: SortOrder
@@ -14938,6 +14972,7 @@ export namespace Prisma {
   export type LibraryItemSumOrderByAggregateInput = {
     id?: SortOrder
     yearPublished?: SortOrder
+    borrowCount?: SortOrder
   }
 
   export type EnumItemTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -16829,6 +16864,7 @@ export namespace Prisma {
     edition?: string | null
     shelfLocation?: string | null
     status?: $Enums.ItemStatus
+    borrowCount?: number
     coverImage?: string | null
     description?: string | null
     isReference?: boolean
@@ -16852,6 +16888,7 @@ export namespace Prisma {
     edition?: string | null
     shelfLocation?: string | null
     status?: $Enums.ItemStatus
+    borrowCount?: number
     coverImage?: string | null
     description?: string | null
     isReference?: boolean
@@ -16962,6 +16999,7 @@ export namespace Prisma {
     edition?: NullableStringFieldUpdateOperationsInput | string | null
     shelfLocation?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumItemStatusFieldUpdateOperationsInput | $Enums.ItemStatus
+    borrowCount?: IntFieldUpdateOperationsInput | number
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     isReference?: BoolFieldUpdateOperationsInput | boolean
@@ -16985,6 +17023,7 @@ export namespace Prisma {
     edition?: NullableStringFieldUpdateOperationsInput | string | null
     shelfLocation?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumItemStatusFieldUpdateOperationsInput | $Enums.ItemStatus
+    borrowCount?: IntFieldUpdateOperationsInput | number
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     isReference?: BoolFieldUpdateOperationsInput | boolean
@@ -17091,6 +17130,7 @@ export namespace Prisma {
     edition?: string | null
     shelfLocation?: string | null
     status?: $Enums.ItemStatus
+    borrowCount?: number
     coverImage?: string | null
     description?: string | null
     isReference?: boolean
@@ -17114,6 +17154,7 @@ export namespace Prisma {
     edition?: string | null
     shelfLocation?: string | null
     status?: $Enums.ItemStatus
+    borrowCount?: number
     coverImage?: string | null
     description?: string | null
     isReference?: boolean
@@ -17196,6 +17237,7 @@ export namespace Prisma {
     edition?: NullableStringFieldUpdateOperationsInput | string | null
     shelfLocation?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumItemStatusFieldUpdateOperationsInput | $Enums.ItemStatus
+    borrowCount?: IntFieldUpdateOperationsInput | number
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     isReference?: BoolFieldUpdateOperationsInput | boolean
@@ -17219,6 +17261,7 @@ export namespace Prisma {
     edition?: NullableStringFieldUpdateOperationsInput | string | null
     shelfLocation?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumItemStatusFieldUpdateOperationsInput | $Enums.ItemStatus
+    borrowCount?: IntFieldUpdateOperationsInput | number
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     isReference?: BoolFieldUpdateOperationsInput | boolean

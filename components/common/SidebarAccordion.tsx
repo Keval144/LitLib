@@ -36,7 +36,7 @@ export function SidebarAccordion({
           "flex w-full items-center justify-between rounded-lg px-2 py-2 text-left text-sm font-medium",
           "transition-all",
           "text-[var(--color-text)]",
-          "hover:bg-[var(--theme-accent-hover)] hover:text-white",
+          "hover:bg-[var(--theme-accent-hover)]",
           "dark:hover:bg-[var(--theme-accent-hover)]",
         )}
       >

@@ -98,6 +98,7 @@ model LibraryItem {
   edition       String?    @db.VarChar(20)
   shelfLocation String?    @db.VarChar(30)
   status        ItemStatus @default(AVAILABLE)
+  borrowCount   Int        @default(0)
   coverImage    String?    @db.VarChar(200)
   description   String?    @db.Text
   isReference   Boolean    @default(false)

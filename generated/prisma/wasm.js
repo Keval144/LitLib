@@ -148,6 +148,7 @@ exports.Prisma.LibraryItemScalarFieldEnum = {
   edition: 'edition',
   shelfLocation: 'shelfLocation',
   status: 'status',
+  borrowCount: 'borrowCount',
   coverImage: 'coverImage',
   description: 'description',
   isReference: 'isReference',
