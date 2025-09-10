@@ -111,7 +111,7 @@ export default function ItemForm({
         onChange={(e) => setItemType((e.target.value as ItemType) || "")}
       >
         {itemTypeOptions.map((opt) => (
-          <SelectItem key={opt.value} value={opt.value}>
+          <SelectItem key={opt.value}>
             {opt.label}
           </SelectItem>
         ))}
@@ -123,7 +123,7 @@ export default function ItemForm({
         onChange={(e) => setStatus((e.target.value as ItemStatus) || "")}
       >
         {statusOptions.map((opt) => (
-          <SelectItem key={opt.value} value={opt.value}>
+          <SelectItem key={opt.value}>
             {opt.label}
           </SelectItem>
         ))}
