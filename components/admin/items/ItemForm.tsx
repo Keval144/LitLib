@@ -20,6 +20,7 @@ const statusOptions: { label: string; value: ItemStatus }[] = [
   { label: "Damaged", value: "DAMAGED" },
 ];
 
+
 export default function ItemForm({
   mode,
   initial,
@@ -41,7 +42,7 @@ export default function ItemForm({
   const [yearPublished, setYearPublished] = useState(initial?.yearPublished?.toString() ?? "");
   const [edition, setEdition] = useState(initial?.edition ?? "");
   const [shelfLocation, setShelfLocation] = useState(initial?.shelfLocation ?? "");
-  const [isReference, setIsReference] = useState(Boolean(initial?.isReference));
+  const [isReference, setIsReference] = useState(Boolean((initial as any)?.isReference));
   const [coverImage, setCoverImage] = useState(initial?.coverImage ?? "");
   const [description, setDescription] = useState(initial?.description ?? "");
 
