@@ -305,7 +305,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/keval/project/LitLib/generated/prisma",
+      "value": "D:\\project\\litlib\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -314,7 +314,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "rhel-openssl-3.0.x",
+        "value": "windows",
         "native": true
       },
       {
@@ -327,7 +327,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/keval/project/LitLib/prisma/schema.prisma",
+    "sourceFilePath": "D:\\project\\litlib\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

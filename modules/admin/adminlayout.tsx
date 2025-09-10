@@ -15,7 +15,7 @@ import litliblogo from "@/public/icon1.png";
 import Link from "next/link";
 import { FaFile, FaFolder, FaFolderOpen } from "react-icons/fa";
 import { SidebarAccordion } from "@/components/common/SidebarAccordion";
-import { useSession } from "next-auth/react";
+import { SessionProvider, useSession } from "next-auth/react";
 import { useLogout } from "@/hooks/uselogout";
 import { divider } from "@heroui/theme";
 
@@ -55,8 +55,8 @@ export function LayoutAdmin({ children }: { children: React.ReactNode }) {
     {
       title: "Items",
       items: [
-        { label: "Item List", href: "/ItemList", icon: <FaFile /> },
-        { label: "Item Add", href: "/ItemAdd", icon: <FaFile /> },
+        { label: "Item List", href: "/admin/items", icon: <FaFile /> },
+        { label: "Item Add", href: "/admin/items/new", icon: <FaFile /> },
       ],
       openIcon: <FaFolderOpen />,
       closedIcon: <FaFolder />,
@@ -72,11 +72,11 @@ export function LayoutAdmin({ children }: { children: React.ReactNode }) {
     },
   ];
   const [open, setOpen] = useState(false);
-  const { data: session, status } = useSession();
+  
   const logout = useLogout();
 
   return (
-    <>
+    <SessionProvider>
       <div className="flex sm:flex-row lg:flex-col">
         <div className="w-max sm:z-10 sm:h-0">
           <Sidebar open={open} setOpen={setOpen}>
@@ -134,7 +134,7 @@ export function LayoutAdmin({ children }: { children: React.ReactNode }) {
         </div>
         {children}
       </div>
-    </>
+    </SessionProvider>
   );
 }
 
