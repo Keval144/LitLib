@@ -3,17 +3,20 @@ import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";
 
+// Define an interface for clarity, though not strictly required if only used once
+interface RouteParams {
+  params: {
+    id: string;
+  };
+}
+
 // GET /api/items/[id]
 export async function GET(
   _req: NextRequest,
-  // Let Next.js infer the type for 'context' or type it generally as 'any' if necessary for other reasons,
-  // but for route params, Next.js handles it internally.
-  // The correct type for the second argument of route handlers is typically an object containing 'params'.
-  // We'll implicitly rely on Next.js's handling here.
-  { params }: { params: { id: string } } // This is the correct way to type it for Next.js 13+ App Router
+  { params }: RouteParams // Use the defined interface
 ) {
   try {
-    const id = Number(params.id); // Use 'params.id' directly
+    const id = Number(params.id);
     if (Number.isNaN(id)) {
       return NextResponse.json({ error: "Invalid id" }, { status: 400 });
     }
@@ -33,7 +36,7 @@ export async function GET(
 // PATCH /api/items/[id]
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } } // Apply the same correction
+  { params }: RouteParams // Use the defined interface
 ) {
   try {
     // Admin only
@@ -42,7 +45,7 @@ export async function PATCH(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const id = Number(params.id); // Use 'params.id' directly
+    const id = Number(params.id);
     if (Number.isNaN(id)) {
       return NextResponse.json({ error: "Invalid id" }, { status: 400 });
     }
@@ -71,7 +74,7 @@ export async function PATCH(
 // DELETE /api/items/[id]
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: { id: string } } // Apply the same correction
+  { params }: RouteParams // Use the defined interface
 ) {
   try {
     // Admin only
@@ -80,7 +83,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const id = Number(params.id); // Use 'params.id' directly
+    const id = Number(params.id);
     if (Number.isNaN(id)) {
       return NextResponse.json({ error: "Invalid id" }, { status: 400 });
     }
