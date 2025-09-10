@@ -6,10 +6,14 @@ import authOptions from "@/lib/auth";
 // GET /api/items/[id]
 export async function GET(
   _req: NextRequest,
-  context: { params: { id: string } }
+  // Let Next.js infer the type for 'context' or type it generally as 'any' if necessary for other reasons,
+  // but for route params, Next.js handles it internally.
+  // The correct type for the second argument of route handlers is typically an object containing 'params'.
+  // We'll implicitly rely on Next.js's handling here.
+  { params }: { params: { id: string } } // This is the correct way to type it for Next.js 13+ App Router
 ) {
   try {
-    const id = Number(context.params.id);
+    const id = Number(params.id); // Use 'params.id' directly
     if (Number.isNaN(id)) {
       return NextResponse.json({ error: "Invalid id" }, { status: 400 });
     }
@@ -29,7 +33,7 @@ export async function GET(
 // PATCH /api/items/[id]
 export async function PATCH(
   req: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } } // Apply the same correction
 ) {
   try {
     // Admin only
@@ -38,7 +42,7 @@ export async function PATCH(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const id = Number(context.params.id);
+    const id = Number(params.id); // Use 'params.id' directly
     if (Number.isNaN(id)) {
       return NextResponse.json({ error: "Invalid id" }, { status: 400 });
     }
@@ -67,7 +71,7 @@ export async function PATCH(
 // DELETE /api/items/[id]
 export async function DELETE(
   _req: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } } // Apply the same correction
 ) {
   try {
     // Admin only
@@ -76,7 +80,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const id = Number(context.params.id);
+    const id = Number(params.id); // Use 'params.id' directly
     if (Number.isNaN(id)) {
       return NextResponse.json({ error: "Invalid id" }, { status: 400 });
     }
