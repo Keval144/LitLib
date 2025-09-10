@@ -7,7 +7,7 @@ import authOptions from "@/lib/auth";
 // GET /api/items/[id]
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: { id: any } },
 ) {
   try {
     const id = Number(params.id);
@@ -28,7 +28,7 @@ export async function GET(
 // PATCH /api/items/[id]
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: { id: any } },
 ) {
   try {
     // Admin only
@@ -65,7 +65,7 @@ export async function PATCH(
 // DELETE /api/items/[id] (soft delete)
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: { id: any } },
 ) {
   try {
     // Admin only
