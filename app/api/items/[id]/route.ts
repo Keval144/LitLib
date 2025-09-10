@@ -1,6 +1,3 @@
-// @ts-ignore
-// @ts-expect-error
-// @ts-nocheck
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
@@ -9,17 +6,19 @@ import authOptions from "@/lib/auth";
 // GET /api/items/[id]
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { id: any } },
+  context: { params: { id: string } }
 ) {
   try {
-    const id = Number(params.id);
+    const id = Number(context.params.id);
     if (Number.isNaN(id)) {
       return NextResponse.json({ error: "Invalid id" }, { status: 400 });
     }
+
     const item = await prisma.libraryItem.findUnique({ where: { id } });
     if (!item || item.isDeleted) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
+
     return NextResponse.json({ item });
   } catch (error) {
     console.error("GET /api/items/[id] error", error);
@@ -30,7 +29,7 @@ export async function GET(
 // PATCH /api/items/[id]
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: any } },
+  context: { params: { id: string } }
 ) {
   try {
     // Admin only
@@ -39,10 +38,11 @@ export async function PATCH(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const id = Number(params.id);
+    const id = Number(context.params.id);
     if (Number.isNaN(id)) {
       return NextResponse.json({ error: "Invalid id" }, { status: 400 });
     }
+
     const body = await req.json();
     const data: any = { ...body };
 
@@ -64,10 +64,10 @@ export async function PATCH(
   }
 }
 
-// DELETE /api/items/[id] (soft delete)
+// DELETE /api/items/[id]
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: { id: any } },
+  context: { params: { id: string } }
 ) {
   try {
     // Admin only
@@ -76,7 +76,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const id = Number(params.id);
+    const id = Number(context.params.id);
     if (Number.isNaN(id)) {
       return NextResponse.json({ error: "Invalid id" }, { status: 400 });
     }
