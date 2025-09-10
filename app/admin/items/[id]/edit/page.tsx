@@ -4,26 +4,28 @@ import UnAuthorised from "@/components/auth/unauthorised";
 import prisma from "@/lib/prisma";
 import ItemForm from "@/components/admin/items/ItemForm";
 
-// ✅ Explicit props type for this page
+// ✅ Explicit props type for Next.js 15 (params is now a Promise)
 type PageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
-// ✅ Define as const/arrow function instead of `function Page`
-//    This avoids Next.js trying to apply its own generic PageProps
+// ✅ Async arrow function works fine
 const Page = async ({ params }: PageProps) => {
-  const { role } = await getUserRole();
+  const { id } = await params; // ⬅️ Must await
 
+  const { role } = await getUserRole();
   if (role !== "ADMINISTRATOR") {
     return <UnAuthorised />;
   }
 
-  const id = Number(params.id);
-  if (Number.isNaN(id)) {
+  const numericId = Number(id);
+  if (Number.isNaN(numericId)) {
     return <UnAuthorised />;
   }
 
-  const item = await prisma.libraryItem.findUnique({ where: { id } });
+  const item = await prisma.libraryItem.findUnique({
+    where: { id: numericId },
+  });
   if (!item || item.isDeleted) {
     return <UnAuthorised />;
   }
@@ -57,11 +59,9 @@ const Page = async ({ params }: PageProps) => {
 
 export default Page;
 
-// ✅ Needed for Next.js app router dynamic routes
+// ✅ Dynamic route params for build
 export async function generateStaticParams() {
-  const items = await prisma.libraryItem.findMany({
-    select: { id: true },
-  });
+  const items = await prisma.libraryItem.findMany({ select: { id: true } });
 
   return items.map((item) => ({
     id: String(item.id), // must be string
