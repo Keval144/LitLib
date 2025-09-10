@@ -1,13 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";
 
 // GET /api/items/[id]
-export async function GET(
-  _req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(_req, { params }) {
   try {
     const id = Number(params.id);
     if (Number.isNaN(id)) {
@@ -27,10 +24,7 @@ export async function GET(
 }
 
 // PATCH /api/items/[id]
-export async function PATCH(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PATCH(req, { params }) {
   try {
     // Admin only
     const session = await getServerSession(authOptions);
@@ -44,7 +38,7 @@ export async function PATCH(
     }
 
     const body = await req.json();
-    const data: any = { ...body };
+    const data = { ...body };
 
     if (data.yearPublished !== undefined) {
       data.yearPublished = data.yearPublished
@@ -65,10 +59,7 @@ export async function PATCH(
 }
 
 // DELETE /api/items/[id]
-export async function DELETE(
-  _req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(_req, { params }) {
   try {
     // Admin only
     const session = await getServerSession(authOptions);
