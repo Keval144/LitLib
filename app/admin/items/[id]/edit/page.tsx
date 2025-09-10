@@ -2,20 +2,28 @@ import { getUserRole } from "@/lib/authtype";
 import { LayoutAdmin } from "@/modules/admin/adminlayout";
 import UnAuthorised from "@/components/auth/unauthorised";
 import prisma from "@/lib/prisma";
-import dynamic from "next/dynamic";
 import ItemForm from "@/components/admin/items/ItemForm";
 
-export default async function Page({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: { id: string };
+}
+
+export default async function Page({ params }: PageProps) {
   const { role } = await getUserRole();
+
   if (role !== "ADMINISTRATOR") {
     return <UnAuthorised />;
   }
 
   const id = Number(params.id);
-  if (Number.isNaN(id)) return <UnAuthorised />;
+  if (Number.isNaN(id)) {
+    return <UnAuthorised />;
+  }
 
   const item = await prisma.libraryItem.findUnique({ where: { id } });
-  if (!item || item.isDeleted) return <UnAuthorised />;
+  if (!item || item.isDeleted) {
+    return <UnAuthorised />;
+  }
 
   const initial = {
     id: item.id,
@@ -39,9 +47,18 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <LayoutAdmin>
-
       <ItemForm mode="edit" initial={initial} />
     </LayoutAdmin>
   );
 }
 
+// ✅ Needed for Next.js app router dynamic routes
+export async function generateStaticParams() {
+  const items = await prisma.libraryItem.findMany({
+    select: { id: true },
+  });
+
+  return items.map((item) => ({
+    id: String(item.id), // must be string
+  }));
+}
