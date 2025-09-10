@@ -4,11 +4,14 @@ import UnAuthorised from "@/components/auth/unauthorised";
 import prisma from "@/lib/prisma";
 import ItemForm from "@/components/admin/items/ItemForm";
 
-interface PageProps {
+// ✅ Explicit props type for this page
+type PageProps = {
   params: { id: string };
-}
+};
 
-export default async function Page({ params }: PageProps) {
+// ✅ Define as const/arrow function instead of `function Page`
+//    This avoids Next.js trying to apply its own generic PageProps
+const Page = async ({ params }: PageProps) => {
   const { role } = await getUserRole();
 
   if (role !== "ADMINISTRATOR") {
@@ -50,7 +53,9 @@ export default async function Page({ params }: PageProps) {
       <ItemForm mode="edit" initial={initial} />
     </LayoutAdmin>
   );
-}
+};
+
+export default Page;
 
 // ✅ Needed for Next.js app router dynamic routes
 export async function generateStaticParams() {

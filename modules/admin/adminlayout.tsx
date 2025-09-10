@@ -61,18 +61,9 @@ export function LayoutAdmin({ children }: { children: React.ReactNode }) {
       openIcon: <FaFolderOpen />,
       closedIcon: <FaFolder />,
     },
-    {
-      title: "Blog",
-      items: [
-        { label: "Blog List", href: "/blogs", icon: <FaFile /> },
-        { label: "Blog Add", href: "/blogadd", icon: <FaFile /> },
-      ],
-      openIcon: <FaFolderOpen />,
-      closedIcon: <FaFolder />,
-    },
   ];
   const [open, setOpen] = useState(false);
-  
+
   const logout = useLogout();
 
   return (
