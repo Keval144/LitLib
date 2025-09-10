@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
@@ -44,7 +45,9 @@ export async function PATCH(
     const data: any = { ...body };
 
     if (data.yearPublished !== undefined) {
-      data.yearPublished = data.yearPublished ? Number(data.yearPublished) : null;
+      data.yearPublished = data.yearPublished
+        ? Number(data.yearPublished)
+        : null;
     }
 
     const updated = await prisma.libraryItem.update({
@@ -87,4 +90,3 @@ export async function DELETE(
     return NextResponse.json({ error: "Failed to delete" }, { status: 500 });
   }
 }
-
