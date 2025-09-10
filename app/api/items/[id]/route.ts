@@ -3,23 +3,10 @@ import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";
 
-// Define an interface for the params object structure
-// This defines the shape of what will be in `req.params` (or the destructured `params` from the second argument)
-interface RequestContext {
-  params: {
-    id: string;
-  };
-}
-
 // GET /api/items/[id]
 export async function GET(
-  // Here, we type the NextRequest to include our params.
-  // The second argument `context` then automatically infers its type,
-  // or we can explicitly type it more generally if needed, but it's often not required
-  // if `NextRequest` is correctly typed.
-  // We'll still destructure it for clarity.
   _req: NextRequest,
-  { params }: RequestContext // Revert to this common pattern for Next.js App Router
+  { params }: { params: { id: string } }
 ) {
   try {
     const id = Number(params.id);
@@ -41,8 +28,8 @@ export async function GET(
 
 // PATCH /api/items/[id]
 export async function PATCH(
-  req: NextRequest, // The 'req' parameter already includes the params. Let's make it explicit.
-  { params }: RequestContext // Keep this for destructuring convenience
+  req: NextRequest,
+  { params }: { params: { id: string } }
 ) {
   try {
     // Admin only
@@ -80,7 +67,7 @@ export async function PATCH(
 // DELETE /api/items/[id]
 export async function DELETE(
   _req: NextRequest,
-  { params }: RequestContext // Keep this for destructuring convenience
+  { params }: { params: { id: string } }
 ) {
   try {
     // Admin only
