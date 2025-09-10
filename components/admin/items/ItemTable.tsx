@@ -137,7 +137,7 @@ export default function ItemTable() {
           className="md:max-w-[200px]"
         >
           {itemTypeOptions.map((opt) => (
-            <SelectItem key={opt.value} value={opt.value}>
+            <SelectItem key={opt.value} >
               {opt.label}
             </SelectItem>
           ))}
@@ -149,7 +149,7 @@ export default function ItemTable() {
           className="md:max-w-[220px]"
         >
           {statusOptions.map((opt) => (
-            <SelectItem key={opt.value} value={opt.value}>
+            <SelectItem key={opt.value} >
               {opt.label}
             </SelectItem>
           ))}
