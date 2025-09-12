@@ -40,12 +40,17 @@ export async function GET() {
     }
 
     const buffer = await workbook.xlsx.writeBuffer();
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const dd = String(today.getDate()).padStart(2, "0");
 
+    const formattedToday = `${dd}_${mm}_${yyyy}`;
     return new Response(buffer as ArrayBuffer, {
       headers: {
         "Content-Type":
           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "Content-Disposition": `attachment; filename=backup_${Date.now()}.xlsx`,
+        "Content-Disposition": `attachment; filename="backup@${formattedToday}.xlsx"`,
       },
     });
   } catch (err) {

@@ -21,7 +21,13 @@ export async function GET() {
     const overdueItems = await prisma.borrowing.count({
       where: { returnDate: null, dueDate: { lt: new Date() } },
     });
-    const totalFinesResult = await prisma.fine.aggregate({ _sum: { amount: true } });
+    const totalFinesResult = await prisma.fine.aggregate({
+      _sum: { amount: true },
+      where: {
+        paidDate: { not: null },
+        status: "PAID",
+      },
+    });
 
     // 2) Popular items (top 5 by borrowing count using relation count)
     const popularItemsRaw = await prisma.libraryItem.findMany({
@@ -116,6 +122,9 @@ export async function GET() {
     });
   } catch (error) {
     console.error("Dashboard route error:", error);
-    return NextResponse.json({ error: "Failed to fetch dashboard" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch dashboard" },
+      { status: 500 },
+    );
   }
 }
