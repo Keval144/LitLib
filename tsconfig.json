@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/items/[id]/route.js", "app/api/admin/borrowings/[id]/damage/route.js", "app/api/admin/borrowings/[id]/return/route.js", "app/api/admin/borrowings/route.js", "app/api/admin/fines/[id]/pay/route.js", "app/api/admin/fines/[id]/waive/route.js", "app/api/admin/reservations/[id]/checkout/route.js", "app/api/admin/reservations/route.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/items/[id]/route.js", "app/api/admin/borrowings/[id]/damage/route.js", "app/api/admin/borrowings/[id]/return/route.js", "app/api/admin/borrowings/route.js", "app/api/admin/fines/[id]/pay/route.js", "app/api/admin/fines/[id]/waive/route.js", "app/api/admin/reservations/[id]/checkout/route.js", "app/api/admin/reservations/route.js", "app/api/reservations/[id]/route.js"],
   "exclude": ["node_modules"]
 }
