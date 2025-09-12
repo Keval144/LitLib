@@ -3,6 +3,7 @@ import { LayoutAdmin } from "@/modules/admin/adminlayout";
 import UnAuthorised from "@/components/auth/unauthorised";
 import prisma from "@/lib/prisma";
 import ItemForm from "@/components/admin/items/ItemForm";
+import PageHeader from "@/components/common/PageHeader";
 
 // ❌ Skip strict typing, make it all any
 type PageProps = {
@@ -51,7 +52,10 @@ const Page = async ({ params }: PageProps) => {
 
   return (
     <LayoutAdmin>
-      <ItemForm mode="edit" initial={initial} />
+      <div className="w-full p-4">
+        <PageHeader title="Edit Item" items={[{ label: "Admin", href: "/" }, { label: "Items", href: "/admin/items" }, { label: `Edit #${numericId}` }]} />
+        <ItemForm mode="edit" initial={initial} />
+      </div>
     </LayoutAdmin>
   );
 };

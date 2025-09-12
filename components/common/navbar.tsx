@@ -83,6 +83,8 @@ const AuthLinks = () => {
     );
   }
 
+  const isAdmin = (session.user as any)?.role === "ADMINISTRATOR";
+
   return (
     <NavbarContent as="div" justify="end" className="hidden lg:flex">
       <Dropdown placement="bottom-end">
@@ -103,9 +105,28 @@ const AuthLinks = () => {
             <p className="font-semibold">Signed in as</p>
             <p className="font-semibold">{session.user?.name}</p>
           </DropdownItem>
-          <DropdownItem key="email" >
+          <DropdownItem key="email">
             <p className="font-extralight">{session.user?.email}</p>
           </DropdownItem>
+          {isAdmin ? (
+            <>
+              <DropdownItem key="admin-items">
+                <Link href="/admin/items">Admin Items</Link>
+              </DropdownItem>
+              <DropdownItem key="admin-reservations">
+                <Link href="/admin/reservations">Reservations</Link>
+              </DropdownItem>
+              <DropdownItem key="admin-fines">
+                <Link href="/admin/fines">Fines</Link>
+              </DropdownItem>
+            </>
+          ) : (
+            <>
+              <DropdownItem key="dashboard">
+                <Link href="/">Dashboard</Link>
+              </DropdownItem>
+            </>
+          )}
           <DropdownItem key="settings">My Settings</DropdownItem>
           <DropdownItem key="logout" color="danger" onClick={logout}>
             Log Out
@@ -117,29 +138,76 @@ const AuthLinks = () => {
 };
 
 const MENU_ITEMS = ["Profile", "Dashboard", "Help & Feedback", "Log Out"];
-const MobileMenuItems = () => (
-  <NavbarMenu className="bg-[var(--color-bg)]/80 fixed inset-0 z-20 !h-screen !w-screen backdrop-blur-lg">
-    {MENU_ITEMS.map((item, index) => (
-      <NavbarMenuItem key={`${item}-${index}`}>
-        <div className={index === 0 ? "pt-20" : ""}>
-          <Link
-            href="#"
-            className={clsx(
-              "w-full ps-10 text-base",
-              index === 2 && "text-primary",
-              index === MENU_ITEMS.length - 1 && "font-semibold text-red-600",
-              index !== 2 &&
-                index !== MENU_ITEMS.length - 1 &&
-                "text-foreground",
-            )}
-          >
-            {item}
-          </Link>
-        </div>
+const MobileMenuItems = () => {
+  const { data: session, status } = useSession();
+  const logout = useLogout();
+  const isLoggedIn = status === "authenticated" && !!session;
+  const isAdmin = (session?.user as any)?.role === "ADMINISTRATOR";
+
+  return (
+    <NavbarMenu className="bg-[var(--color-bg)]/80 fixed inset-0 z-20 !h-screen !w-screen backdrop-blur-lg">
+      <NavbarMenuItem>
+        <Link
+          href="/search"
+          className="block w-full ps-10 pt-20 text-base text-foreground"
+        >
+          Search
+        </Link>
       </NavbarMenuItem>
-    ))}
-  </NavbarMenu>
-);
+      <NavbarMenuItem>
+        <Link
+          href="/announcement"
+          className="block w-full ps-10 text-base text-foreground"
+        >
+          Announcement
+        </Link>
+      </NavbarMenuItem>
+      <NavbarMenuItem>
+        <Link
+          href="/events"
+          className="block w-full ps-10 text-base text-foreground"
+        >
+          Events
+        </Link>
+      </NavbarMenuItem>
+      <NavbarMenuItem>
+        <Link href="/" className="block w-full ps-10 text-base text-primary">
+          Dashboard
+        </Link>
+      </NavbarMenuItem>
+
+      {!isLoggedIn ? (
+        <>
+          <NavbarMenuItem>
+            <Link
+              href="/login"
+              className="block w-full ps-10 text-base text-foreground"
+            >
+              Login
+            </Link>
+          </NavbarMenuItem>
+          <NavbarMenuItem>
+            <Link
+              href="/signup"
+              className="block w-full ps-10 text-base font-semibold text-foreground"
+            >
+              Sign Up
+            </Link>
+          </NavbarMenuItem>
+        </>
+      ) : (
+        <NavbarMenuItem>
+          <button
+            onClick={logout}
+            className="block w-full ps-10 text-base font-semibold text-red-600"
+          >
+            Log Out
+          </button>
+        </NavbarMenuItem>
+      )}
+    </NavbarMenu>
+  );
+};
 
 export const HomeNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

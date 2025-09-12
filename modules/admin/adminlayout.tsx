@@ -1,23 +1,21 @@
 "use client";
 import React, { useState } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/admin/sidebar";
-import {
-  IconArrowLeft,
-  IconBrandTabler,
-  IconSettings,
-  IconUserBolt,
-} from "@tabler/icons-react";
+import { IconBrandTabler } from "@tabler/icons-react";
 import { motion } from "motion/react";
-import { cn } from "@/lib/utils";
+import { CiBoxList, CiLogout } from "react-icons/ci";
+import { BiBookAdd } from "react-icons/bi";
 import { ThemeSwitch } from "@/components/common/theme-switch";
 import Image from "next/image";
 import litliblogo from "@/public/icon1.png";
 import Link from "next/link";
-import { FaFile, FaFolder, FaFolderOpen } from "react-icons/fa";
+import { FaBook } from "react-icons/fa";
+import { PiNotebookDuotone } from "react-icons/pi";
 import { SidebarAccordion } from "@/components/common/SidebarAccordion";
-import { SessionProvider, useSession } from "next-auth/react";
+import { SessionProvider } from "next-auth/react";
 import { useLogout } from "@/hooks/uselogout";
-import { divider } from "@heroui/theme";
+import { TbReceiptDollar } from "react-icons/tb";
+import { IoMdBook } from "react-icons/io";
 
 export function LayoutAdmin({ children }: { children: React.ReactNode }) {
   const links = [
@@ -29,24 +27,32 @@ export function LayoutAdmin({ children }: { children: React.ReactNode }) {
       ),
     },
     {
-      label: "Profile",
-      href: "#",
+      label: "Borrowing",
+      href: "/admin/borrowings",
       icon: (
-        <IconUserBolt className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
+        <IoMdBook className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
       ),
     },
     {
-      label: "Settings",
-      href: "#",
+      label: "Manage Fines",
+      href: "/admin/fines",
       icon: (
-        <IconSettings className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
+        <TbReceiptDollar className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
       ),
     },
+    {
+      label: "Reservations",
+      href: "/admin/reservations",
+      icon: (
+        <PiNotebookDuotone className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
+      ),
+    },
+
     {
       label: "Logout",
       href: "#",
       icon: (
-        <IconArrowLeft className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
+        <CiLogout className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
       ),
     },
   ];
@@ -55,11 +61,11 @@ export function LayoutAdmin({ children }: { children: React.ReactNode }) {
     {
       title: "Items",
       items: [
-        { label: "Item List", href: "/admin/items", icon: <FaFile /> },
-        { label: "Item Add", href: "/admin/items/new", icon: <FaFile /> },
+        { label: "Item List", href: "/admin/items", icon: <CiBoxList /> },
+        { label: "Item Add", href: "/admin/items/new", icon: <BiBookAdd /> },
       ],
-      openIcon: <FaFolderOpen />,
-      closedIcon: <FaFolder />,
+      openIcon: <FaBook />,
+      closedIcon: <FaBook />,
     },
   ];
   const [open, setOpen] = useState(false);
@@ -68,7 +74,7 @@ export function LayoutAdmin({ children }: { children: React.ReactNode }) {
 
   return (
     <SessionProvider>
-      <div className="flex sm:flex-row lg:flex-col">
+      <div className="flex flex-col md:flex-row">
         <div className="w-max sm:z-10 sm:h-0">
           <Sidebar open={open} setOpen={setOpen}>
             <SidebarBody className="h-screen w-auto justify-between gap-10 sm:h-0">
@@ -115,15 +121,15 @@ export function LayoutAdmin({ children }: { children: React.ReactNode }) {
                     ),
                   }}
                 />
+                <div className="px-3 py-1">
+                  <ThemeSwitch />
+                </div>
               </div>
               {/* Add ThemeSwitch component here */}
-              <div className="px-3 py-1">
-                <ThemeSwitch />
-              </div>
             </SidebarBody>
           </Sidebar>
         </div>
-        {children}
+        <div className="w-full min-w-0 flex-1 overflow-x-auto">{children}</div>
       </div>
     </SessionProvider>
   );

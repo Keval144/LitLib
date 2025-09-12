@@ -158,20 +158,21 @@ model Reservation {
 }
 
 model Fine {
-  id          Int         @id @default(autoincrement())
-  amount      Float
-  reason      String      @db.VarChar(50)
-  issueDate   DateTime    @default(now()) @db.Timestamptz
-  paidDate    DateTime?   @db.Timestamptz
-  status      FineStatus  @default(UNPAID)
-  createdAt   DateTime    @default(now()) @db.Timestamptz
+  id            Int         @id @default(autoincrement())
+  amount        Float
+  waivedAmount  Float       @default(0)
+  reason        String      @db.VarChar(50)
+  issueDate     DateTime    @default(now()) @db.Timestamptz
+  paidDate      DateTime?   @db.Timestamptz
+  status        FineStatus  @default(UNPAID)
+  createdAt     DateTime    @default(now()) @db.Timestamptz
   updatedAt     DateTime    @default(now()) @db.Timestamptz
 
   // Relationships
-  user        User        @relation(fields: [userId], references: [id])
-  userId      Int
-  borrowing   Borrowing   @relation(fields: [borrowingId], references: [id])
-  borrowingId Int         @unique
+  user          User        @relation(fields: [userId], references: [id])
+  userId        Int
+  borrowing     Borrowing   @relation(fields: [borrowingId], references: [id])
+  borrowingId   Int         @unique
 }
 
 model Notification {

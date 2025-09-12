@@ -7,5 +7,9 @@ const ItemTable = dynamic(() => import("@/components/admin/items/ItemTable"), {
 });
 
 export default function ItemTableWrapper() {
-  return <ItemTable />;
+  return (
+    <div className="w-full">
+      <ItemTable />
+    </div>
+  );
 }

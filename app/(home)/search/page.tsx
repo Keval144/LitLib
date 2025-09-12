@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Tabs, Tab, Card, CardBody, Input, Button } from "@heroui/react";
 import { FaSearch, FaBook, FaBookOpen, FaMusic, FaEllipsisH } from "react-icons/fa";
-
+import PageHeader from "@/components/common/PageHeader";
 type ItemType = "BOOK" | "JOURNAL" | "MULTIMEDIA" | "OTHER";
 
 type LibraryItemDTO = {
@@ -28,11 +28,13 @@ export default function Search() {
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<(typeof tabs)[number]["id"]>("ALL");
   const [items, setItems] = useState<LibraryItemDTO[]>([]);
+  const [isPatron, setIsPatron] = useState(false);
 
   const params = useMemo(() => {
     const sp = new URLSearchParams();
     if (searchTerm) sp.set("q", searchTerm);
     if (selected !== "ALL") sp.set("type", selected);
+    // Hide items that are RESERVED or CHECKED_OUT from public search by default
     sp.set("status", "AVAILABLE");
     sp.set("perPage", "20");
     sp.set("page", "1");
@@ -57,12 +59,27 @@ export default function Search() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
 
+  useEffect(() => {
+    let active = true;
+    fetch("/api/auth/session")
+      .then((r) => r.json())
+      .then((s) => {
+        if (!active) return;
+        setIsPatron(Boolean(s?.user && s.user.role === "PATRON"));
+      })
+      .catch(() => setIsPatron(false));
+    return () => {
+      active = false;
+    };
+  }, []);
+
   return (
     <section
       id="Search"
       className="relative min-h-[100dvh] w-full bg-gradient-to-br from-[var(--color-bg)] to-[var(--color-card)] px-5 pb-16 pt-32 sm:px-10"
     >
       <div className="relative z-10 mx-auto max-w-7xl space-y-3">
+        <PageHeader title="Search" items={[{ label: "Home", href: "/" }, { label: "Search" }]} />
         <h1 className="text-4xl font-bold text-black dark:text-white">Search</h1>
         <p className="mb text-medium text-gray-600 dark:text-gray-200">
           Find books, journals and more
@@ -135,6 +152,33 @@ export default function Search() {
                           <div className="font-semibold">{it.title}</div>
                           <div className="text-sm text-default-500">{it.author}</div>
                           <div className="mt-1 text-xs text-default-400">{it.itemType}</div>
+                          {isPatron && (
+                            <Button
+                              size="sm"
+                              className="mt-2"
+                              onClick={async () => {
+                                try {
+                                  const res = await fetch("/api/reservations", {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({ itemId: it.id }),
+                                  });
+                                  const data = await res.json();
+                                  if (!res.ok) {
+                                    alert(data.error || "Failed to reserve");
+                                  } else {
+                                    alert("Reserved successfully");
+                                    fetchItems();
+                                  }
+                                } catch (e) {
+                                  console.error(e);
+                                  alert("Failed to reserve");
+                                }
+                              }}
+                            >
+                              Reserve
+                            </Button>
+                          )}
                         </div>
                       ))}
                     </div>

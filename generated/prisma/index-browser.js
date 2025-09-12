@@ -196,6 +196,7 @@ exports.Prisma.ReservationScalarFieldEnum = {
 exports.Prisma.FineScalarFieldEnum = {
   id: 'id',
   amount: 'amount',
+  waivedAmount: 'waivedAmount',
   reason: 'reason',
   issueDate: 'issueDate',
   paidDate: 'paidDate',

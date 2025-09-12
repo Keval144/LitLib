@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import PageHeader from "@/components/common/PageHeader";
 
 export default function Announcement() {
   return (
@@ -9,7 +10,10 @@ export default function Announcement() {
       )}
       id="Announcement"
     >
-      Announcement Here
+      <div className="mx-auto w-full max-w-6xl">
+        <PageHeader title="Announcement" items={[{ label: "Home", href: "/" }, { label: "Announcement" }]} />
+        Announcement Here
+      </div>
     </section>
   );
 }

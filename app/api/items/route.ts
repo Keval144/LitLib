@@ -2,10 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";
+import { cleanupExpiredReservationsGlobal } from "@/lib/reservation";
 
 // GET /api/items?q=&type=&status=&category=&language=&page=&perPage=&sortBy=&sortOrder=
 export async function GET(req: NextRequest) {
   try {
+    // Clean up expired reservations globally to ensure accurate availability
+    try { await cleanupExpiredReservationsGlobal(); } catch {}
+
     const { searchParams } = new URL(req.url);
     const q = searchParams.get("q") || undefined;
     const type = searchParams.get("type") || undefined; // BOOK | JOURNAL | MULTIMEDIA | OTHER
@@ -40,6 +44,12 @@ export async function GET(req: NextRequest) {
     }
     if (type) where.itemType = type;
     if (status) where.status = status;
+
+    // Hide items that are RESERVED by others (and not checked out). Already covered by status filter when status=AVAILABLE,
+    // but this provides flexibility if status filter isn't provided.
+    if (!status) {
+      where.status = { notIn: ["RESERVED", "CHECKED_OUT"] } as any;
+    }
     if (category) where.categories = { has: category };
     if (language) where.languages = { has: language };
 

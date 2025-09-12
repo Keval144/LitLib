@@ -129,15 +129,17 @@ export default function ItemTable() {
           value={q}
           onValueChange={setQ}
           className="md:max-w-xs"
+          variant="bordered"
         />
         <Select
           label="Type"
           selectedKeys={type ? [type] : []}
           onChange={(e) => setType((e.target.value as ItemType) || "")}
           className="md:max-w-[200px]"
+          variant="bordered"
         >
           {itemTypeOptions.map((opt) => (
-            <SelectItem key={opt.value} >
+            <SelectItem key={opt.value} variant="bordered">
               {opt.label}
             </SelectItem>
           ))}
@@ -147,11 +149,10 @@ export default function ItemTable() {
           selectedKeys={status ? [status] : []}
           onChange={(e) => setStatus((e.target.value as ItemStatus) || "")}
           className="md:max-w-[220px]"
+          variant="bordered"
         >
           {statusOptions.map((opt) => (
-            <SelectItem key={opt.value} >
-              {opt.label}
-            </SelectItem>
+            <SelectItem key={opt.value}>{opt.label}</SelectItem>
           ))}
         </Select>
         <Input
@@ -160,9 +161,14 @@ export default function ItemTable() {
           value={category}
           onValueChange={setCategory}
           className="md:max-w-[200px]"
+          variant="bordered"
         />
         <div className="flex gap-2">
-          <Button color="primary" onPress={() => setPage(1)} isLoading={loading}>
+          <Button
+            color="success"
+            onPress={() => setPage(1)}
+            isLoading={loading}
+          >
             Apply
           </Button>
           <Button
@@ -179,7 +185,11 @@ export default function ItemTable() {
           </Button>
         </div>
         <div className="grow" />
-        <Button color="secondary" startContent={<FaPlus />} onPress={() => router.push("/admin/items/new")}>
+        <Button
+          color="secondary"
+          startContent={<FaPlus />}
+          onPress={() => router.push("/admin/items/new")}
+        >
           Add Item
         </Button>
       </div>
@@ -224,13 +234,12 @@ export default function ItemTable() {
                     it.status === "AVAILABLE"
                       ? "success"
                       : it.status === "CHECKED_OUT"
-                      ? "warning"
-                      : it.status === "RESERVED"
-                      ? "secondary"
-                      : "danger"
+                        ? "warning"
+                        : it.status === "RESERVED"
+                          ? "secondary"
+                          : "danger"
                   }
                   variant="flat"
-                  size="sm"
                 >
                   {it.status}
                 </Chip>
@@ -239,7 +248,6 @@ export default function ItemTable() {
               <TableCell>
                 <div className="flex gap-2">
                   <Button
-                    size="sm"
                     variant="flat"
                     startContent={<FaPen />}
                     onPress={() => router.push(`/admin/items/${it.id}/edit`)}
@@ -247,7 +255,6 @@ export default function ItemTable() {
                     Edit
                   </Button>
                   <Button
-                    size="sm"
                     color="danger"
                     startContent={<FaTrash />}
                     onPress={() => handleDelete(it.id)}
@@ -265,9 +272,13 @@ export default function ItemTable() {
         <div className="text-sm text-default-500">
           Page {page} of {totalPages}
         </div>
-        <Pagination page={page} total={totalPages} onChange={setPage} showControls />
+        <Pagination
+          page={page}
+          total={totalPages}
+          onChange={setPage}
+          showControls
+        />
       </div>
     </div>
   );
 }
-

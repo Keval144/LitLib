@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import PageHeader from "@/components/common/PageHeader";
 
 export default function Events() {
   return (
@@ -9,7 +10,10 @@ export default function Events() {
       )}
       id="Events"
     >
-      Event Here
+      <div className="mx-auto w-full max-w-6xl">
+        <PageHeader title="Events" items={[{ label: "Home", href: "/" }, { label: "Events" }]} />
+        Event Here
+      </div>
     </section>
   );
 }

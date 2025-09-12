@@ -29,13 +29,13 @@ export default function LoginForm() {
         redirect: false,
         email,
         password,
-        callbackUrl: "/dashboard",
+        callbackUrl: "/",
       });
 
       if (res?.error) {
         setError(res.error);
       } else {
-        router.push(res?.url || "/dashboard");
+        router.push(res?.url || "/");
       }
     });
   }

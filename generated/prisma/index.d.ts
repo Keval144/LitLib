@@ -7934,6 +7934,7 @@ export namespace Prisma {
   export type FineAvgAggregateOutputType = {
     id: number | null
     amount: number | null
+    waivedAmount: number | null
     userId: number | null
     borrowingId: number | null
   }
@@ -7941,6 +7942,7 @@ export namespace Prisma {
   export type FineSumAggregateOutputType = {
     id: number | null
     amount: number | null
+    waivedAmount: number | null
     userId: number | null
     borrowingId: number | null
   }
@@ -7948,6 +7950,7 @@ export namespace Prisma {
   export type FineMinAggregateOutputType = {
     id: number | null
     amount: number | null
+    waivedAmount: number | null
     reason: string | null
     issueDate: Date | null
     paidDate: Date | null
@@ -7961,6 +7964,7 @@ export namespace Prisma {
   export type FineMaxAggregateOutputType = {
     id: number | null
     amount: number | null
+    waivedAmount: number | null
     reason: string | null
     issueDate: Date | null
     paidDate: Date | null
@@ -7974,6 +7978,7 @@ export namespace Prisma {
   export type FineCountAggregateOutputType = {
     id: number
     amount: number
+    waivedAmount: number
     reason: number
     issueDate: number
     paidDate: number
@@ -7989,6 +7994,7 @@ export namespace Prisma {
   export type FineAvgAggregateInputType = {
     id?: true
     amount?: true
+    waivedAmount?: true
     userId?: true
     borrowingId?: true
   }
@@ -7996,6 +8002,7 @@ export namespace Prisma {
   export type FineSumAggregateInputType = {
     id?: true
     amount?: true
+    waivedAmount?: true
     userId?: true
     borrowingId?: true
   }
@@ -8003,6 +8010,7 @@ export namespace Prisma {
   export type FineMinAggregateInputType = {
     id?: true
     amount?: true
+    waivedAmount?: true
     reason?: true
     issueDate?: true
     paidDate?: true
@@ -8016,6 +8024,7 @@ export namespace Prisma {
   export type FineMaxAggregateInputType = {
     id?: true
     amount?: true
+    waivedAmount?: true
     reason?: true
     issueDate?: true
     paidDate?: true
@@ -8029,6 +8038,7 @@ export namespace Prisma {
   export type FineCountAggregateInputType = {
     id?: true
     amount?: true
+    waivedAmount?: true
     reason?: true
     issueDate?: true
     paidDate?: true
@@ -8129,6 +8139,7 @@ export namespace Prisma {
   export type FineGroupByOutputType = {
     id: number
     amount: number
+    waivedAmount: number
     reason: string
     issueDate: Date
     paidDate: Date | null
@@ -8161,6 +8172,7 @@ export namespace Prisma {
   export type FineSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     amount?: boolean
+    waivedAmount?: boolean
     reason?: boolean
     issueDate?: boolean
     paidDate?: boolean
@@ -8176,6 +8188,7 @@ export namespace Prisma {
   export type FineSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     amount?: boolean
+    waivedAmount?: boolean
     reason?: boolean
     issueDate?: boolean
     paidDate?: boolean
@@ -8191,6 +8204,7 @@ export namespace Prisma {
   export type FineSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     amount?: boolean
+    waivedAmount?: boolean
     reason?: boolean
     issueDate?: boolean
     paidDate?: boolean
@@ -8206,6 +8220,7 @@ export namespace Prisma {
   export type FineSelectScalar = {
     id?: boolean
     amount?: boolean
+    waivedAmount?: boolean
     reason?: boolean
     issueDate?: boolean
     paidDate?: boolean
@@ -8216,7 +8231,7 @@ export namespace Prisma {
     borrowingId?: boolean
   }
 
-  export type FineOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "reason" | "issueDate" | "paidDate" | "status" | "createdAt" | "updatedAt" | "userId" | "borrowingId", ExtArgs["result"]["fine"]>
+  export type FineOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "waivedAmount" | "reason" | "issueDate" | "paidDate" | "status" | "createdAt" | "updatedAt" | "userId" | "borrowingId", ExtArgs["result"]["fine"]>
   export type FineInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     borrowing?: boolean | BorrowingDefaultArgs<ExtArgs>
@@ -8239,6 +8254,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       amount: number
+      waivedAmount: number
       reason: string
       issueDate: Date
       paidDate: Date | null
@@ -8674,6 +8690,7 @@ export namespace Prisma {
   interface FineFieldRefs {
     readonly id: FieldRef<"Fine", 'Int'>
     readonly amount: FieldRef<"Fine", 'Float'>
+    readonly waivedAmount: FieldRef<"Fine", 'Float'>
     readonly reason: FieldRef<"Fine", 'String'>
     readonly issueDate: FieldRef<"Fine", 'DateTime'>
     readonly paidDate: FieldRef<"Fine", 'DateTime'>
@@ -12667,6 +12684,7 @@ export namespace Prisma {
   export const FineScalarFieldEnum: {
     id: 'id',
     amount: 'amount',
+    waivedAmount: 'waivedAmount',
     reason: 'reason',
     issueDate: 'issueDate',
     paidDate: 'paidDate',
@@ -13386,6 +13404,7 @@ export namespace Prisma {
     NOT?: FineWhereInput | FineWhereInput[]
     id?: IntFilter<"Fine"> | number
     amount?: FloatFilter<"Fine"> | number
+    waivedAmount?: FloatFilter<"Fine"> | number
     reason?: StringFilter<"Fine"> | string
     issueDate?: DateTimeFilter<"Fine"> | Date | string
     paidDate?: DateTimeNullableFilter<"Fine"> | Date | string | null
@@ -13401,6 +13420,7 @@ export namespace Prisma {
   export type FineOrderByWithRelationInput = {
     id?: SortOrder
     amount?: SortOrder
+    waivedAmount?: SortOrder
     reason?: SortOrder
     issueDate?: SortOrder
     paidDate?: SortOrderInput | SortOrder
@@ -13420,6 +13440,7 @@ export namespace Prisma {
     OR?: FineWhereInput[]
     NOT?: FineWhereInput | FineWhereInput[]
     amount?: FloatFilter<"Fine"> | number
+    waivedAmount?: FloatFilter<"Fine"> | number
     reason?: StringFilter<"Fine"> | string
     issueDate?: DateTimeFilter<"Fine"> | Date | string
     paidDate?: DateTimeNullableFilter<"Fine"> | Date | string | null
@@ -13434,6 +13455,7 @@ export namespace Prisma {
   export type FineOrderByWithAggregationInput = {
     id?: SortOrder
     amount?: SortOrder
+    waivedAmount?: SortOrder
     reason?: SortOrder
     issueDate?: SortOrder
     paidDate?: SortOrderInput | SortOrder
@@ -13455,6 +13477,7 @@ export namespace Prisma {
     NOT?: FineScalarWhereWithAggregatesInput | FineScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Fine"> | number
     amount?: FloatWithAggregatesFilter<"Fine"> | number
+    waivedAmount?: FloatWithAggregatesFilter<"Fine"> | number
     reason?: StringWithAggregatesFilter<"Fine"> | string
     issueDate?: DateTimeWithAggregatesFilter<"Fine"> | Date | string
     paidDate?: DateTimeNullableWithAggregatesFilter<"Fine"> | Date | string | null
@@ -14236,6 +14259,7 @@ export namespace Prisma {
 
   export type FineCreateInput = {
     amount: number
+    waivedAmount?: number
     reason: string
     issueDate?: Date | string
     paidDate?: Date | string | null
@@ -14249,6 +14273,7 @@ export namespace Prisma {
   export type FineUncheckedCreateInput = {
     id?: number
     amount: number
+    waivedAmount?: number
     reason: string
     issueDate?: Date | string
     paidDate?: Date | string | null
@@ -14261,6 +14286,7 @@ export namespace Prisma {
 
   export type FineUpdateInput = {
     amount?: FloatFieldUpdateOperationsInput | number
+    waivedAmount?: FloatFieldUpdateOperationsInput | number
     reason?: StringFieldUpdateOperationsInput | string
     issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     paidDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14274,6 +14300,7 @@ export namespace Prisma {
   export type FineUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     amount?: FloatFieldUpdateOperationsInput | number
+    waivedAmount?: FloatFieldUpdateOperationsInput | number
     reason?: StringFieldUpdateOperationsInput | string
     issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     paidDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14287,6 +14314,7 @@ export namespace Prisma {
   export type FineCreateManyInput = {
     id?: number
     amount: number
+    waivedAmount?: number
     reason: string
     issueDate?: Date | string
     paidDate?: Date | string | null
@@ -14299,6 +14327,7 @@ export namespace Prisma {
 
   export type FineUpdateManyMutationInput = {
     amount?: FloatFieldUpdateOperationsInput | number
+    waivedAmount?: FloatFieldUpdateOperationsInput | number
     reason?: StringFieldUpdateOperationsInput | string
     issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     paidDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14310,6 +14339,7 @@ export namespace Prisma {
   export type FineUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     amount?: FloatFieldUpdateOperationsInput | number
+    waivedAmount?: FloatFieldUpdateOperationsInput | number
     reason?: StringFieldUpdateOperationsInput | string
     issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     paidDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -15232,6 +15262,7 @@ export namespace Prisma {
   export type FineCountOrderByAggregateInput = {
     id?: SortOrder
     amount?: SortOrder
+    waivedAmount?: SortOrder
     reason?: SortOrder
     issueDate?: SortOrder
     paidDate?: SortOrder
@@ -15245,6 +15276,7 @@ export namespace Prisma {
   export type FineAvgOrderByAggregateInput = {
     id?: SortOrder
     amount?: SortOrder
+    waivedAmount?: SortOrder
     userId?: SortOrder
     borrowingId?: SortOrder
   }
@@ -15252,6 +15284,7 @@ export namespace Prisma {
   export type FineMaxOrderByAggregateInput = {
     id?: SortOrder
     amount?: SortOrder
+    waivedAmount?: SortOrder
     reason?: SortOrder
     issueDate?: SortOrder
     paidDate?: SortOrder
@@ -15265,6 +15298,7 @@ export namespace Prisma {
   export type FineMinOrderByAggregateInput = {
     id?: SortOrder
     amount?: SortOrder
+    waivedAmount?: SortOrder
     reason?: SortOrder
     issueDate?: SortOrder
     paidDate?: SortOrder
@@ -15278,6 +15312,7 @@ export namespace Prisma {
   export type FineSumOrderByAggregateInput = {
     id?: SortOrder
     amount?: SortOrder
+    waivedAmount?: SortOrder
     userId?: SortOrder
     borrowingId?: SortOrder
   }
@@ -16436,6 +16471,7 @@ export namespace Prisma {
 
   export type FineCreateWithoutUserInput = {
     amount: number
+    waivedAmount?: number
     reason: string
     issueDate?: Date | string
     paidDate?: Date | string | null
@@ -16448,6 +16484,7 @@ export namespace Prisma {
   export type FineUncheckedCreateWithoutUserInput = {
     id?: number
     amount: number
+    waivedAmount?: number
     reason: string
     issueDate?: Date | string
     paidDate?: Date | string | null
@@ -16649,6 +16686,7 @@ export namespace Prisma {
     NOT?: FineScalarWhereInput | FineScalarWhereInput[]
     id?: IntFilter<"Fine"> | number
     amount?: FloatFilter<"Fine"> | number
+    waivedAmount?: FloatFilter<"Fine"> | number
     reason?: StringFilter<"Fine"> | string
     issueDate?: DateTimeFilter<"Fine"> | Date | string
     paidDate?: DateTimeNullableFilter<"Fine"> | Date | string | null
@@ -16950,6 +16988,7 @@ export namespace Prisma {
 
   export type FineCreateWithoutBorrowingInput = {
     amount: number
+    waivedAmount?: number
     reason: string
     issueDate?: Date | string
     paidDate?: Date | string | null
@@ -16962,6 +17001,7 @@ export namespace Prisma {
   export type FineUncheckedCreateWithoutBorrowingInput = {
     id?: number
     amount: number
+    waivedAmount?: number
     reason: string
     issueDate?: Date | string
     paidDate?: Date | string | null
@@ -17097,6 +17137,7 @@ export namespace Prisma {
 
   export type FineUpdateWithoutBorrowingInput = {
     amount?: FloatFieldUpdateOperationsInput | number
+    waivedAmount?: FloatFieldUpdateOperationsInput | number
     reason?: StringFieldUpdateOperationsInput | string
     issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     paidDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -17109,6 +17150,7 @@ export namespace Prisma {
   export type FineUncheckedUpdateWithoutBorrowingInput = {
     id?: IntFieldUpdateOperationsInput | number
     amount?: FloatFieldUpdateOperationsInput | number
+    waivedAmount?: FloatFieldUpdateOperationsInput | number
     reason?: StringFieldUpdateOperationsInput | string
     issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     paidDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -17794,6 +17836,7 @@ export namespace Prisma {
   export type FineCreateManyUserInput = {
     id?: number
     amount: number
+    waivedAmount?: number
     reason: string
     issueDate?: Date | string
     paidDate?: Date | string | null
@@ -17909,6 +17952,7 @@ export namespace Prisma {
 
   export type FineUpdateWithoutUserInput = {
     amount?: FloatFieldUpdateOperationsInput | number
+    waivedAmount?: FloatFieldUpdateOperationsInput | number
     reason?: StringFieldUpdateOperationsInput | string
     issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     paidDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -17921,6 +17965,7 @@ export namespace Prisma {
   export type FineUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     amount?: FloatFieldUpdateOperationsInput | number
+    waivedAmount?: FloatFieldUpdateOperationsInput | number
     reason?: StringFieldUpdateOperationsInput | string
     issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     paidDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -17933,6 +17978,7 @@ export namespace Prisma {
   export type FineUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     amount?: FloatFieldUpdateOperationsInput | number
+    waivedAmount?: FloatFieldUpdateOperationsInput | number
     reason?: StringFieldUpdateOperationsInput | string
     issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     paidDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

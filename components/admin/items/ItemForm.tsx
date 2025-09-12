@@ -1,7 +1,14 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import { Input, Select, SelectItem, Button, Switch, Textarea } from "@heroui/react";
+import {
+  Input,
+  Select,
+  SelectItem,
+  Button,
+  Switch,
+  Textarea,
+} from "@heroui/react";
 import { useRouter } from "next/navigation";
 import type { ItemStatus, ItemType, LibraryItemDTO } from "./ItemTable";
 
@@ -20,7 +27,6 @@ const statusOptions: { label: string; value: ItemStatus }[] = [
   { label: "Damaged", value: "DAMAGED" },
 ];
 
-
 export default function ItemForm({
   mode,
   initial,
@@ -35,18 +41,35 @@ export default function ItemForm({
   const [author, setAuthor] = useState(initial?.author ?? "");
   const [publisher, setPublisher] = useState(initial?.publisher ?? "");
   const [isbn, setIsbn] = useState(initial?.isbn ?? "");
-  const [itemType, setItemType] = useState<ItemType | "">((initial?.itemType as ItemType) ?? "");
-  const [status, setStatus] = useState<ItemStatus | "">((initial?.status as ItemStatus) ?? "AVAILABLE");
-  const [categories, setCategories] = useState((initial?.categories ?? []).join(", "));
-  const [languages, setLanguages] = useState((initial?.languages ?? []).join(", "));
-  const [yearPublished, setYearPublished] = useState(initial?.yearPublished?.toString() ?? "");
+  const [itemType, setItemType] = useState<ItemType | "">(
+    (initial?.itemType as ItemType) ?? "",
+  );
+  const [status, setStatus] = useState<ItemStatus | "">(
+    (initial?.status as ItemStatus) ?? "AVAILABLE",
+  );
+  const [categories, setCategories] = useState(
+    (initial?.categories ?? []).join(", "),
+  );
+  const [languages, setLanguages] = useState(
+    (initial?.languages ?? []).join(", "),
+  );
+  const [yearPublished, setYearPublished] = useState(
+    initial?.yearPublished?.toString() ?? "",
+  );
   const [edition, setEdition] = useState(initial?.edition ?? "");
-  const [shelfLocation, setShelfLocation] = useState(initial?.shelfLocation ?? "");
-  const [isReference, setIsReference] = useState(Boolean((initial as any)?.isReference));
+  const [shelfLocation, setShelfLocation] = useState(
+    initial?.shelfLocation ?? "",
+  );
+  const [isReference, setIsReference] = useState(
+    Boolean((initial as any)?.isReference),
+  );
   const [coverImage, setCoverImage] = useState(initial?.coverImage ?? "");
   const [description, setDescription] = useState(initial?.description ?? "");
 
-  const isValid = useMemo(() => title.trim() && author.trim() && itemType, [title, author, itemType]);
+  const isValid = useMemo(
+    () => title.trim() && author.trim() && itemType,
+    [title, author, itemType],
+  );
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,88 +121,172 @@ export default function ItemForm({
   };
 
   return (
-    <form className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2" onSubmit={onSubmit}>
-      <Input isRequired label="Title" value={title} onValueChange={setTitle} />
-      <Input isRequired label="Author" value={author} onValueChange={setAuthor} />
-      <Input label="Publisher" value={publisher} onValueChange={setPublisher} />
-      <Input label="ISBN" value={isbn} onValueChange={setIsbn} />
-
-      <Select
-        label="Item Type"
-        isRequired
-        selectedKeys={itemType ? [itemType] : []}
-        onChange={(e) => setItemType((e.target.value as ItemType) || "")}
+    <div className="flex w-full flex-col">
+      <form
+        className="z-2 grid w-full grid-cols-1 gap-6 p-6 md:grid-cols-2"
+        onSubmit={onSubmit}
       >
-        {itemTypeOptions.map((opt) => (
-          <SelectItem key={opt.value}>
-            {opt.label}
-          </SelectItem>
-        ))}
-      </Select>
+        {/* --- Basic Info --- */}
+        <div className="mb-2 border-b pb-2 md:col-span-2">
+          <h3 className="text-sm font-semibold text-gray-600">Basic Info</h3>
+        </div>
 
-      <Select
-        label="Status"
-        selectedKeys={status ? [status] : []}
-        onChange={(e) => setStatus((e.target.value as ItemStatus) || "")}
-      >
-        {statusOptions.map((opt) => (
-          <SelectItem key={opt.value}>
-            {opt.label}
-          </SelectItem>
-        ))}
-      </Select>
-
-      <Input
-        label="Categories"
-        description="Comma separated"
-        value={categories}
-        onValueChange={setCategories}
-      />
-      <Input
-        label="Languages"
-        description="Comma separated"
-        value={languages}
-        onValueChange={setLanguages}
-      />
-
-      <Input
-        label="Year Published"
-        type="number"
-        value={yearPublished}
-        onValueChange={setYearPublished}
-      />
-      <Input label="Edition" value={edition} onValueChange={setEdition} />
-
-      <Input
-        label="Shelf Location"
-        value={shelfLocation}
-        onValueChange={setShelfLocation}
-      />
-
-      <div className="flex items-center gap-3">
-        <Switch isSelected={isReference} onValueChange={setIsReference}>
-          Reference only
-        </Switch>
-      </div>
-
-      <Input label="Cover Image URL" value={coverImage} onValueChange={setCoverImage} />
-
-      <div className="md:col-span-2">
-        <Textarea
-          label="Description"
-          minRows={4}
-          value={description}
-          onValueChange={setDescription}
+        <Input
+          autoFocus
+          isRequired
+          label="Title"
+          placeholder="Enter the item title"
+          value={title}
+          onValueChange={setTitle}
+          variant="bordered"
+          size="sm"
+          className="w-full"
         />
-      </div>
+        <Input
+          isRequired
+          label="Author"
+          placeholder="Author name"
+          value={author}
+          onValueChange={setAuthor}
+          variant="bordered"
+          size="sm"
+          className="w-full"
+        />
 
-      <div className="md:col-span-2 flex justify-end gap-2">
-        <Button variant="flat" onPress={() => router.push("/admin/items")}>Cancel</Button>
-        <Button color="primary" type="submit" isLoading={submitting} isDisabled={!isValid}>
-          {mode === "create" ? "Create" : "Save"}
-        </Button>
-      </div>
-    </form>
+        {/* --- Publication Info --- */}
+        <div className="mb-2 mt-4 border-b pb-2 md:col-span-2">
+          <h3 className="text-sm font-semibold text-gray-600">
+            Publication Info
+          </h3>
+        </div>
+
+        <Input
+          label="Publisher"
+          placeholder="Penguin Books"
+          value={publisher}
+          onValueChange={setPublisher}
+          variant="bordered"
+          size="sm"
+          className="w-full"
+        />
+        <Input
+          label="ISBN"
+          placeholder="978-3-16-148410-0"
+          value={isbn}
+          onValueChange={setIsbn}
+          variant="bordered"
+          size="sm"
+          className="w-full"
+        />
+        <Input
+          label="Year Published"
+          type="number"
+          placeholder="e.g. 2023"
+          value={yearPublished}
+          onValueChange={setYearPublished}
+          variant="bordered"
+          size="sm"
+          className="w-full"
+        />
+        <Input
+          label="Edition"
+          placeholder="1st, 2nd, etc."
+          value={edition}
+          onValueChange={setEdition}
+          variant="bordered"
+          size="sm"
+          className="w-full"
+        />
+
+        {/* --- Library Details --- */}
+        <div className="mb-2 mt-4 border-b pb-2 md:col-span-2">
+          <h3 className="text-sm font-semibold text-gray-600">
+            Library Details
+          </h3>
+        </div>
+
+        <Select
+          label="Item Type"
+          isRequired
+          selectedKeys={itemType ? [itemType] : []}
+          onChange={(e) => setItemType((e.target.value as ItemType) || "")}
+          variant="bordered"
+          size="sm"
+          className="w-full"
+        >
+          {itemTypeOptions.map((opt) => (
+            <SelectItem key={opt.value}>{opt.label}</SelectItem>
+          ))}
+        </Select>
+
+        <Select
+          label="Status"
+          selectedKeys={status ? [status] : []}
+          onChange={(e) => setStatus((e.target.value as ItemStatus) || "")}
+          variant="bordered"
+          size="sm"
+          isDisabled={mode === "create"}
+          className="w-full"
+        >
+          {statusOptions.map((opt) => (
+            <SelectItem key={opt.value}>{opt.label}</SelectItem>
+          ))}
+        </Select>
+
+        <Input
+          label="Categories"
+          description="Separate multiple with commas (e.g. Fiction, Mystery)"
+          value={categories}
+          onValueChange={setCategories}
+          variant="bordered"
+          size="sm"
+          className="w-full"
+        />
+        <Input
+          label="Languages"
+          description="Separate multiple with commas (e.g. English, French)"
+          value={languages}
+          onValueChange={setLanguages}
+          variant="bordered"
+          size="sm"
+          className="w-full"
+        />
+
+        <Input
+          label="Shelf Location"
+          placeholder="A1-23"
+          value={shelfLocation}
+          onValueChange={setShelfLocation}
+          variant="bordered"
+          size="sm"
+          className="w-full"
+        />
+
+        <div className="mt-2 flex items-center gap-3 md:col-span-2">
+          <Switch
+            isSelected={isReference}
+            onValueChange={setIsReference}
+            color="success"
+          >
+            Reference only
+          </Switch>
+        </div>
+
+        <div className="mt-4 flex flex-col justify-end gap-3 md:col-span-2 md:flex-row">
+          <Button variant="flat" onPress={() => router.push("/admin/items")}>
+            Cancel
+          </Button>
+          <Button
+            color="primary"
+            type="submit"
+            isLoading={submitting}
+            isDisabled={!isValid}
+          >
+            {mode === "create" ? "Create" : "Save"}
+          </Button>
+        </div>
+        {/* --- Actions --- */}
+      </form>
+    </div>
   );
 }
-
