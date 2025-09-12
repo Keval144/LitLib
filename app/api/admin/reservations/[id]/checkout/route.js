@@ -1,18 +1,16 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";
 
 // POST /api/admin/reservations/[id]/checkout - mark as checked out: create borrowing, fulfill reservation, set item CHECKED_OUT
-export async function POST(
-  _req: NextRequest,
-  { params }: { params: { id: string } },
-) {
+export async function POST(req, { params }) {
   try {
     const session = await getServerSession(authOptions);
     if (!session || session.user?.role !== "ADMINISTRATOR") {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
+
     const reservationId = Number(params.id);
     if (Number.isNaN(reservationId)) {
       return NextResponse.json({ error: "Invalid id" }, { status: 400 });
@@ -35,7 +33,9 @@ export async function POST(
         where: { itemType: reservation.item.itemType },
       });
       const maxLoanDays = rule?.maxLoanDays ?? 14;
-      const dueDate = new Date(now.getTime() + maxLoanDays * 24 * 60 * 60 * 1000);
+      const dueDate = new Date(
+        now.getTime() + maxLoanDays * 24 * 60 * 60 * 1000,
+      );
 
       const borrowing = await tx.borrowing.create({
         data: {
@@ -61,10 +61,9 @@ export async function POST(
     });
 
     return NextResponse.json({ borrowingId: result.id }, { status: 201 });
-  } catch (e: any) {
+  } catch (e) {
     console.error("POST /api/admin/reservations/[id]/checkout error", e);
     const msg = e?.message || "Failed";
     return NextResponse.json({ error: msg }, { status: 400 });
   }
 }
-
