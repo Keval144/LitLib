@@ -58,7 +58,7 @@ export default function AdminReservationTable() {
               <TableCell>{new Date(r.reservationDate).toLocaleString()}</TableCell>
               <TableCell>{new Date(r.expiryDate).toLocaleString()}</TableCell>
               <TableCell>
-                <Button color="primary" size="sm" onPress={() => checkout(r.id)}>Checkout</Button>
+                <Button color="success" size="sm" onPress={() => checkout(r.id)}>Checkout</Button>
               </TableCell>
             </TableRow>
           ))}

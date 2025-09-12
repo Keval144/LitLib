@@ -186,7 +186,7 @@ export default function ItemTable() {
         </div>
         <div className="grow" />
         <Button
-          color="secondary"
+          className="bg-[var(--color-accent)]"
           startContent={<FaPlus />}
           onPress={() => router.push("/admin/items/new")}
         >

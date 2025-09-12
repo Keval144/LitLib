@@ -127,7 +127,6 @@ const AuthLinks = () => {
               </DropdownItem>
             </>
           )}
-          <DropdownItem key="settings">My Settings</DropdownItem>
           <DropdownItem key="logout" color="danger" onClick={logout}>
             Log Out
           </DropdownItem>

@@ -277,7 +277,7 @@ export default function ItemForm({
             Cancel
           </Button>
           <Button
-            color="primary"
+            color="success"
             type="submit"
             isLoading={submitting}
             isDisabled={!isValid}

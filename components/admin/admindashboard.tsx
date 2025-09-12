@@ -147,7 +147,7 @@ const AdminDashboard: React.FC = () => {
   };
 
   const statsCards = [
-    { label: "Total Books", value: stats.totalBooks },
+    { label: "Total Items", value: stats.totalBooks },
     { label: "Total Users", value: stats.totalUsers },
     { label: "Active Borrowings", value: stats.activeBorrowings },
     { label: "Pending Reservations", value: stats.pendingReservations },
