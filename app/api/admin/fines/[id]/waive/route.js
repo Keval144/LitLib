@@ -1,21 +1,21 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";
 
 // POST /api/admin/fines/[id]/waive { amount?: number }
 // If amount omitted => waive full remaining (set status to WAIVED)
-export async function POST(
-  req: NextRequest,
-  { params }: { params: { id: string } },
-) {
+export async function POST(req, { params }) {
   try {
     const session = await getServerSession(authOptions);
     if (!session || session.user?.role !== "ADMINISTRATOR") {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
+
     const id = Number(params.id);
-    if (Number.isNaN(id)) return NextResponse.json({ error: "Invalid id" }, { status: 400 });
+    if (Number.isNaN(id)) {
+      return NextResponse.json({ error: "Invalid id" }, { status: 400 });
+    }
 
     const body = await req.json().catch(() => ({}));
     const amount = typeof body.amount === "number" && body.amount > 0 ? body.amount : null;
@@ -29,12 +29,12 @@ export async function POST(
     if (amount) {
       newWaived = Math.min(fine.amount, fine.waivedAmount + amount);
       if (newWaived >= fine.amount) {
-        status = "WAIVED" as const;
+        status = "WAIVED";
       }
     } else {
       // waive full remaining
       newWaived = fine.amount;
-      status = "WAIVED" as const;
+      status = "WAIVED";
     }
 
     await prisma.fine.update({
@@ -48,4 +48,3 @@ export async function POST(
     return NextResponse.json({ error: "Failed" }, { status: 400 });
   }
 }
-

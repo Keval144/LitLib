@@ -14,8 +14,12 @@ export async function GET() {
     const borrowings = await prisma.borrowing.findMany({
       orderBy: { borrowDate: "desc" },
       include: {
-        user: { select: { id: true, firstName: true, lastName: true, email: true } },
-        item: { select: { id: true, title: true, author: true, itemType: true } },
+        user: {
+          select: { id: true, firstName: true, lastName: true, email: true },
+        },
+        item: {
+          select: { id: true, title: true, author: true, itemType: true },
+        },
       },
       take: 200,
     });
@@ -26,4 +30,3 @@ export async function GET() {
     return NextResponse.json({ error: "Failed" }, { status: 500 });
   }
 }
-

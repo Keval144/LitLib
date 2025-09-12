@@ -1,13 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";
 
 // POST /api/admin/borrowings/[id]/return
-export async function POST(
-  _req: NextRequest,
-  { params }: { params: { id: string } },
-) {
+export async function POST(req, { params }) {
   try {
     const session = await getServerSession(authOptions);
     if (!session || session.user?.role !== "ADMINISTRATOR") {
@@ -75,7 +72,7 @@ export async function POST(
     });
 
     return NextResponse.json(result, { status: 200 });
-  } catch (e: any) {
+  } catch (e) {
     console.error("POST /api/admin/borrowings/[id]/return error", e);
     return NextResponse.json(
       { error: e?.message || "Failed" },
