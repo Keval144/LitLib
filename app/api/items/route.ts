@@ -29,9 +29,7 @@ export async function GET(req: NextRequest) {
       | "asc"
       | "desc";
 
-    const where: any = {
-      isDeleted: false,
-    };
+    const where: any = {};
 
     if (q) {
       where.OR = [

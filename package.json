@@ -36,6 +36,7 @@
     "chart.js": "^4.5.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "exceljs": "^4.4.0",
     "framer-motion": "^12.23.6",
     "imagekit": "^6.0.0",
     "intl-messageformat": "10.7.16",

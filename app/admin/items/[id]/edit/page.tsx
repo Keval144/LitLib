@@ -26,7 +26,7 @@ const Page = async ({ params }: PageProps) => {
   const item = await prisma.libraryItem.findUnique({
     where: { id: numericId },
   });
-  if (!item || item.isDeleted) {
+  if (!item) {
     return <UnAuthorised />;
   }
 

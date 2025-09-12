@@ -11,10 +11,10 @@ export async function GET(_req, { params }) {
       return NextResponse.json({ error: "Invalid id" }, { status: 400 });
     }
 
-    const item = await prisma.libraryItem.findUnique({ where: { id } });
-    if (!item || item.isDeleted) {
-      return NextResponse.json({ error: "Not found" }, { status: 404 });
-    }
+  const item = await prisma.libraryItem.findUnique({ where: { id } });
+  if (!item) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
 
     return NextResponse.json({ item });
   } catch (error) {
@@ -72,9 +72,8 @@ export async function DELETE(_req, { params }) {
       return NextResponse.json({ error: "Invalid id" }, { status: 400 });
     }
 
-    await prisma.libraryItem.update({
+  await prisma.libraryItem.delete({
       where: { id },
-      data: { isDeleted: true, deletedAt: new Date() },
     });
 
     return NextResponse.json({ ok: true });

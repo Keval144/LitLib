@@ -16,6 +16,7 @@ import { SessionProvider } from "next-auth/react";
 import { useLogout } from "@/hooks/uselogout";
 import { TbReceiptDollar } from "react-icons/tb";
 import { IoMdBook } from "react-icons/io";
+import { BsDatabaseDown } from "react-icons/bs";
 
 export function LayoutAdmin({ children }: { children: React.ReactNode }) {
   const links = [
@@ -47,7 +48,13 @@ export function LayoutAdmin({ children }: { children: React.ReactNode }) {
         <PiNotebookDuotone className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
       ),
     },
-
+    {
+      label: "Backup Database",
+      href: "/admin/database",
+      icon: (
+        <BsDatabaseDown className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
+      ),
+    },
     {
       label: "Logout",
       href: "#",
@@ -108,11 +115,11 @@ export function LayoutAdmin({ children }: { children: React.ReactNode }) {
               <div className="flex flex-col gap-3">
                 <SidebarLink
                   link={{
-                    label: "Manu Arora",
+                    label: "Admin",
                     href: "#",
                     icon: (
                       <img
-                        src="https://assets.aceternity.com/manu.png"
+                        src="https://i.pravatar.cc/150?u=placeholder"
                         className="h-7 w-7 shrink-0 rounded-full"
                         width={50}
                         height={50}

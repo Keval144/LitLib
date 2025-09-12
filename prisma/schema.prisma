@@ -68,10 +68,9 @@ model User {
   password      String    @db.VarChar(100)
   role          UserRole
   libraryCardId String?   @unique @db.VarChar(20)
-  isDeleted     Boolean   @default(false)
   createdAt     DateTime  @default(now()) @db.Timestamptz
   updatedAt     DateTime    @default(now()) @db.Timestamptz
-  deletedAt     DateTime? @db.Timestamptz
+
 
   // Relationships
   borrowedItems Borrowing[]
@@ -100,10 +99,9 @@ model LibraryItem {
   coverImage    String?     @db.VarChar(200)
   description   String?     @db.Text
   isReference   Boolean     @default(false)
-  isDeleted     Boolean     @default(false)
   createdAt     DateTime    @default(now()) @db.Timestamptz
   updatedAt     DateTime    @default(now()) @db.Timestamptz
-  deletedAt     DateTime?   @db.Timestamptz
+
 
   // Relationships
   borrowings    Borrowing[]
@@ -197,10 +195,8 @@ model Blog {
   readingTime   Int
   categories    String[]  @db.VarChar(30)
   featuredImage String?   @db.VarChar(200)
-  isDeleted     Boolean   @default(false)
   createdAt     DateTime  @default(now()) @db.Timestamptz
   updatedAt     DateTime    @default(now()) @db.Timestamptz
-  deletedAt     DateTime? @db.Timestamptz
 
   // Relationship
   user      User              @relation(fields: [userId], references: [id])
@@ -212,10 +208,8 @@ model Announcement {
   title       String    @db.VarChar(100)
   content     String    @db.Text
   categories  String[]  @db.VarChar(30)
-  isDeleted   Boolean   @default(false)
   createdAt   DateTime  @default(now()) @db.Timestamptz
   updatedAt     DateTime    @default(now()) @db.Timestamptz
-  deletedAt   DateTime? @db.Timestamptz
 
   // Relationship
   user      User              @relation(fields: [userId], references: [id])

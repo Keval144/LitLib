@@ -88,7 +88,6 @@ export async function POST(req: NextRequest) {
     const result = await prisma.$transaction(async (tx) => {
       const item = await tx.libraryItem.findUnique({ where: { id: itemId } });
       if (!item) throw new Error("Item not found");
-      if (item.isDeleted) throw new Error("Item not available");
       if (item.status !== "AVAILABLE") throw new Error("Item not available for reservation");
 
       const existing = await tx.reservation.count({
