@@ -80,7 +80,6 @@ export default function Search() {
     >
       <div className="relative z-10 mx-auto max-w-7xl space-y-3">
         <PageHeader title="Search" items={[{ label: "Home", href: "/" }, { label: "Search" }]} />
-        <h1 className="text-4xl font-bold text-black dark:text-white">Search</h1>
         <p className="mb text-medium text-gray-600 dark:text-gray-200">
           Find books, journals and more
         </p>
