@@ -3,45 +3,58 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
 function monthKey(date: Date) {
-  // key like "2025-08"
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
 }
 
+// Simple in-memory cache (per server instance)
+const DASHBOARD_TTL_MS = 30_000; // 30s
+const globalForCache = globalThis as unknown as {
+  __dashboardCache__?: { data: any; ts: number };
+};
+
 export async function GET() {
   try {
-    // 1) Basic stats
-    const totalBooks = await prisma.libraryItem.count();
-    const totalUsers = await prisma.user.count();
-    const activeBorrowings = await prisma.borrowing.count({
-      where: { returnDate: null },
-    });
-    const pendingReservations = await prisma.reservation.count({
-      where: { status: "PENDING" },
-    });
-    const overdueItems = await prisma.borrowing.count({
-      where: { returnDate: null, dueDate: { lt: new Date() } },
-    });
-    const totalFinesResult = await prisma.fine.aggregate({
-      _sum: { amount: true },
-      where: {
-        paidDate: { not: null },
-        status: "PAID",
-      },
-    });
+    const nowTs = Date.now();
+    const cached = globalForCache.__dashboardCache__;
+    if (cached && nowTs - cached.ts < DASHBOARD_TTL_MS) {
+      return new NextResponse(JSON.stringify(cached.data), {
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "public, max-age=30, s-maxage=30, stale-while-revalidate=60",
+        },
+      });
+    }
 
-    // 2) Popular items (top 5 by borrowing count using relation count)
+    // 1) Basic stats in parallel
+    const [
+      totalBooks,
+      totalUsers,
+      activeBorrowings,
+      pendingReservations,
+      overdueItems,
+      totalFinesResult,
+    ] = await Promise.all([
+      prisma.libraryItem.count(),
+      prisma.user.count(),
+      prisma.borrowing.count({ where: { returnDate: null } }),
+      prisma.reservation.count({ where: { status: "PENDING" } }),
+      prisma.borrowing.count({ where: { returnDate: null, dueDate: { lt: new Date() } } }),
+      prisma.fine.aggregate({ _sum: { amount: true } }),
+    ]);
+
+    // 2) Popular items (top 5)
     const popularItemsRaw = await prisma.libraryItem.findMany({
       take: 5,
       orderBy: { borrowings: { _count: "desc" } },
-      select: { id: true, title: true, borrowings: true },
+      select: { id: true, title: true, _count: { select: { borrowings: true } } },
     });
     const popularItems = popularItemsRaw.map((it) => ({
       id: it.id,
       title: it.title,
-      borrowCount: it.borrowings.length,
+      borrowCount: it._count.borrowings,
     }));
 
-    // 3) Recent activity from Borrowing table (last 10)
+    // 3) Recent activity (last 10)
     const recentBorrowings = await prisma.borrowing.findMany({
       take: 10,
       orderBy: { borrowDate: "desc" },
@@ -60,26 +73,25 @@ export async function GET() {
 
     // 4) Monthly Borrowings (last 6 months)
     const now = new Date();
-    const start = new Date(now.getFullYear(), now.getMonth() - 5, 1); // inclusive
+    const start = new Date(now.getFullYear(), now.getMonth() - 5, 1);
     const borrowingsSince = await prisma.borrowing.findMany({
       where: { borrowDate: { gte: start } },
       select: { borrowDate: true },
     });
 
-    // Build last-6-months labels and counts
     const months: string[] = [];
     const monthKeys: string[] = [];
     for (let i = 5; i >= 0; i--) {
       const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-      const label = d.toLocaleString("default", { month: "short" }); // "Jan", "Feb"
+      const label = d.toLocaleString("default", { month: "short" });
       months.push(label);
       monthKeys.push(monthKey(d));
     }
     const countsByKey: Record<string, number> = {};
-    borrowingsSince.forEach((b) => {
+    for (const b of borrowingsSince) {
       const k = monthKey(new Date(b.borrowDate));
       countsByKey[k] = (countsByKey[k] ?? 0) + 1;
-    });
+    }
     const monthlyData = monthKeys.map((k) => countsByKey[k] ?? 0);
 
     // 5) Items by category (itemType)
@@ -93,16 +105,13 @@ export async function GET() {
     };
 
     // 6) User distribution by role
-    const usersByRole = await prisma.user.groupBy({
-      by: ["role"],
-      _count: { _all: true },
-    });
+    const usersByRole = await prisma.user.groupBy({ by: ["role"], _count: { _all: true } });
     const userDistribution = {
       labels: usersByRole.map((r) => r.role),
       data: usersByRole.map((r) => r._count._all),
     };
 
-    return NextResponse.json({
+    const payload = {
       stats: {
         totalBooks,
         totalUsers,
@@ -113,18 +122,22 @@ export async function GET() {
       },
       popularItems,
       recentActivity,
-      monthlyBorrowings: {
-        labels: months,
-        data: monthlyData,
-      },
+      monthlyBorrowings: { labels: months, data: monthlyData },
       itemsByCategory,
       userDistribution,
+    };
+
+    // Update in-memory cache
+    globalForCache.__dashboardCache__ = { data: payload, ts: nowTs };
+
+    return new NextResponse(JSON.stringify(payload), {
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "public, max-age=30, s-maxage=30, stale-while-revalidate=60",
+      },
     });
   } catch (error) {
     console.error("Dashboard route error:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch dashboard" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Failed to fetch dashboard" }, { status: 500 });
   }
 }
