@@ -20,7 +20,8 @@ export async function GET() {
       return new NextResponse(JSON.stringify(cached.data), {
         headers: {
           "Content-Type": "application/json",
-          "Cache-Control": "public, max-age=30, s-maxage=30, stale-while-revalidate=60",
+          "Cache-Control":
+            "public, max-age=30, s-maxage=30, stale-while-revalidate=60",
         },
       });
     }
@@ -38,15 +39,24 @@ export async function GET() {
       prisma.user.count(),
       prisma.borrowing.count({ where: { returnDate: null } }),
       prisma.reservation.count({ where: { status: "PENDING" } }),
-      prisma.borrowing.count({ where: { returnDate: null, dueDate: { lt: new Date() } } }),
-      prisma.fine.aggregate({ _sum: { amount: true } }),
+      prisma.borrowing.count({
+        where: { returnDate: null, dueDate: { lt: new Date() } },
+      }),
+      prisma.fine.aggregate({
+        _sum: { amount: true },
+        where: { status: { not: "WAIVED" } },
+      }),
     ]);
 
     // 2) Popular items (top 5)
     const popularItemsRaw = await prisma.libraryItem.findMany({
       take: 5,
       orderBy: { borrowings: { _count: "desc" } },
-      select: { id: true, title: true, _count: { select: { borrowings: true } } },
+      select: {
+        id: true,
+        title: true,
+        _count: { select: { borrowings: true } },
+      },
     });
     const popularItems = popularItemsRaw.map((it) => ({
       id: it.id,
@@ -105,7 +115,10 @@ export async function GET() {
     };
 
     // 6) User distribution by role
-    const usersByRole = await prisma.user.groupBy({ by: ["role"], _count: { _all: true } });
+    const usersByRole = await prisma.user.groupBy({
+      by: ["role"],
+      _count: { _all: true },
+    });
     const userDistribution = {
       labels: usersByRole.map((r) => r.role),
       data: usersByRole.map((r) => r._count._all),
@@ -133,11 +146,15 @@ export async function GET() {
     return new NextResponse(JSON.stringify(payload), {
       headers: {
         "Content-Type": "application/json",
-        "Cache-Control": "public, max-age=30, s-maxage=30, stale-while-revalidate=60",
+        "Cache-Control":
+          "public, max-age=30, s-maxage=30, stale-while-revalidate=60",
       },
     });
   } catch (error) {
     console.error("Dashboard route error:", error);
-    return NextResponse.json({ error: "Failed to fetch dashboard" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch dashboard" },
+      { status: 500 },
+    );
   }
 }
